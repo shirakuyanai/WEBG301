@@ -1,4 +1,4 @@
-http://localhost/GreenwichPhoneShop_Project/GreenwichPhoneShop_Project1.	Login
+1.	Login
 2.	Sign up
 3.	Index for user
 4.	Cart
