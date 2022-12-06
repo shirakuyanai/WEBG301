@@ -33,32 +33,32 @@ class RegistrationFormType extends AbstractType
                 ],
             ])
             ->add('email', EmailType::class)
-            ->add('firstname', TextType::class)
-            ->add('lastname', TextType::class)
-            ->add('phone', NumberType::class,[
-                'constraints' => [
-                    new NotBlank(),
-                    new Length([
-                        'min' => 9,
-                        'max' => 10,
-                        'minMessage' => 'Invalid phone number',
-                        'maxMessage' => 'Invalid phone number',
-                        // max length allowed by Symfony for security reasons
-                    ]),
-                ]
-            ])
-            ->add('gender', ChoiceType::class, [
-                    'choices' => [
-                        'Male' => '1',
-                        'Female' => '2',
-                        'Others' => '0',
-                        ]
-                    ]
-                )
-            ->add('address_1', TextType::class)
-            ->add('address_2', TextType::class)
-            ->add('address_3', TextType::class)
-            ->add('address_4', TextType::class)
+            // ->add('firstname', TextType::class)
+            // ->add('lastname', TextType::class)
+            // ->add('phone', NumberType::class,[
+            //     'constraints' => [
+            //         new NotBlank(),
+            //         new Length([
+            //             'min' => 9,
+            //             'max' => 10,
+            //             'minMessage' => 'Invalid phone number',
+            //             'maxMessage' => 'Invalid phone number',
+            //             // max length allowed by Symfony for security reasons
+            //         ]),
+            //     ]
+            // ])
+            // ->add('gender', ChoiceType::class, [
+            //         'choices' => [
+            //             'Male' => '1',
+            //             'Female' => '2',
+            //             'Others' => '0',
+            //             ]
+            //         ]
+            //     )
+            // ->add('address_1', TextType::class)
+            // ->add('address_2', TextType::class)
+            // ->add('address_3', TextType::class)
+            // ->add('address_4', TextType::class)
 
 
             ->add('plainPassword', RepeatedType::class, [
