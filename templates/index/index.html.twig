@@ -1,7 +1,44 @@
-{% extends 'base.html.twig' %}
+{% extends '/BaseTemplates/IndexBase.html.twig' %}
 
-{% block title %}Index{% endblock %}
+{% block title %}{{ controller_name }}{% endblock %}
 
 {% block body %}
-{# Trang index làm tiếp ở đây #}
+    <div class="container border mt-5">
+        <h1>index</h1>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Stock</th>
+                    <th>actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for product in products %}
+                <tr>
+                    <td>{{ product.id }}</td>
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.price }}</td>
+                    <td>{{ product.stock }}</td>
+                    <td>
+                        <a href="{{ path('app_product_show', {'id': product.id}) }}">show</a>
+                        {% if app.user %}
+                            <a href="{{ path('app_product_add', {'product_id': product.id, 'username' : app.user.userIdentifier}) }}">add to cart</a>
+                        {% endif %}
+                        <a href="{{ path('app_product_edit', {'id': product.id}) }}">edit</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{{ path('app_product_new') }}">Create new</a>
+    </div>
 {% endblock %}
