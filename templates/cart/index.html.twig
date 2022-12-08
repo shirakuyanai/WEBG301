@@ -1,0 +1,53 @@
+{% extends '/BaseTemplates/CartBase.html.twig' %}
+
+{% block title %}Cart{% endblock %}
+
+{% block body %}
+    <div class="container mt-5 p-5 border">
+        <h1>Cart index</h1>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for cart in carts %}
+                <form method="post">
+                    <tr>
+                        <td>{{ cart.product }}</td>
+                        {% set stock = 0 %}
+                        {% for product in products %}
+                            {% if product == cart.product %}
+                                {% set stock = product.stock %}
+                            {% endif %}
+                        {% endfor %}
+                        <td><input type="number" value="{{ cart.quantity }}" min=1 max="{{ stock }}" id="input_quantity"></td>
+
+                        {# {% set input_quantity = 0 %} #}
+                        
+                        <td>
+                            <button href="{{ path('app_cart_delete', {'id': cart.id}) }}" onclick="return confirm('Are you sure you want to delete this item?')" class="btn">
+                                <i class="fa fa-trash" aria-hidden="true"></i>
+                            </button>
+                            <button href="{{ path('app_cart_edit', {'id': cart.id, 'quantity': input_quantity}) }}" onclick="return confirm('Are you sure you want to edit this item?')" class="btn">
+                                <i class="fa fa-trash" aria-hidden="true"></i>
+                            </button>
+                            
+                        </td>
+                    </tr>
+                </form>
+            {% else %}
+                <tr>
+                    <td colspan="3">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{{ path('app_cart_new') }}">Create new</a>
+    </div>
+{% endblock %}
