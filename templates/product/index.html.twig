@@ -1,38 +1,48 @@
+{% extends '/BaseTemplates/ProductBase.html.twig' %}
 {% block body %}
-    <h1>Product index</h1>
+    <div class="container mt-5 p-5 border">
+        <h1>Product index</h1>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Stock</th>
+                        <th>actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for product in products %}
+                    <tr>
+                        <td>{{ product.id }}</td>
+                        <td>{{ product.name }}</td>
+                        <td>{{ product.price }}</td>
+                        <td>{{ product.stock }}</td>
+                        <td>
+                            <a href="{{ path('app_product_show', {'id': product.id}) }}">show</a>
+                            {% if app.user %}
+                                <a href="{{ path('app_product_add_to_cart', {'product_id': product.id, 'username': app.user.userIdentifier, 'quantity': 1}) }}">add to cart</a>
+                            {% endif %}
+                            <a href="{{ path('app_product_edit', {'id': product.id}) }}">edit</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="5">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Stock</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for product in products %}
-            <tr>
-                <td>{{ product.id }}</td>
-                <td>{{ product.name }}</td>
-                <td>{{ product.price }}</td>
-                <td>{{ product.stock }}</td>
-                <td>
-                    <a href="{{ path('app_product_show', {'id': product.id}) }}">show</a>
-                    {% if app.user %}
-                        <a href="{{ path('app_product_add_to_cart', {'product_id': product.id, 'username': app.user.userIdentifier, 'quantity': 1}) }}">add to cart</a>
-                    {% endif %}
-                    <a href="{{ path('app_product_edit', {'id': product.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            <a href="{{ path('app_product_new') }}">Create new</a>
+    </div>
 
-    <a href="{{ path('app_product_new') }}">Create new</a>
+
+
+
+
+    <div class="container mt-5 p-5 border">
+        
+    </div>
 {% endblock %}

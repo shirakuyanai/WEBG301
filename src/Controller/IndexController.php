@@ -6,7 +6,9 @@ use App\Repository\CartRepository;
 use App\Repository\ProductRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\HeaderUtils;
 use Symfony\Component\Routing\Annotation\Route;
 
 class IndexController extends AbstractController
@@ -19,9 +21,8 @@ class IndexController extends AbstractController
         $this->cartRepository = $cartRepository;
     }
     #[Route('/', name: 'app_index')]
-    public function index(): Response
+    public function index(Request $request): Response
     {
-
         return $this->render('index/index.html.twig', [
             'controller_name' => 'Landing Page',
             'products' => $this->productRepository->findAll(),

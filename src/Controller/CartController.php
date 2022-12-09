@@ -11,6 +11,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\HeaderUtils;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/cart')]
@@ -100,36 +101,39 @@ class CartController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/{quantity}/edit', name: 'app_cart_edit', methods: ['GET', 'POST'])]
-    public function edit($id, $quantity): Response
+    #[Route('/edit', name: 'app_cart_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request): Response
     {
-        $username = $this->getUser()->getUserIdentifier();
-        $user = $this->userRepository->findByUsername($username);
+        $id = $request->request->get('cart_id');
         $cart = $this->cartRepository->find($id);
 
         if (!$cart)
         {
-            return new Response("Item does not exist.", Response::HTTP_BAD_REQUEST,
-            ['content-type' => 'text/html']);
+            // return new Response("Item does not exist anymore.", Response::HTTP_BAD_REQUEST,
+            // ['content-type' => 'text/html']);
+            return $this->redirectToRoute('app_cart_index', [], Response::HTTP_SEE_OTHER);
         }
+        
+        $new_quantity = $request->request->get('input_quantity');
         $old_quantity = $cart->getQuantity();
-        $cart->setQuantity($quantity);
+        $cart->setQuantity($new_quantity);
         
         $product = $this->productRepository->find($cart->getProduct());
-        $product->setStock($product->getStock() + $old_quantity - $quantity);
+        $product->setStock($product->getStock() + $old_quantity - $new_quantity);
         $manager = $this->managerRegistry->getManager();
         $manager->persist($product);
         $manager->persist($cart);
         $manager->flush();
 
         return $this->redirectToRoute('app_cart_index', [], Response::HTTP_SEE_OTHER);
+
+        // return new Response($new_quantity, 200,
+        //     ['content-type' => 'text/html']);
     }
 
     #[Route('/{id}', name: 'app_cart_delete', methods: ['POST'])]
     public function delete($id): Response
     {
-        $username = $this->getUser()->getUserIdentifier();
-        $user = $this->userRepository->findByUsername($username);
         $cart = $this->cartRepository->find($id);
 
         if (!$cart)
