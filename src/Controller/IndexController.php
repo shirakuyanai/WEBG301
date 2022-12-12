@@ -23,10 +23,16 @@ class IndexController extends AbstractController
     #[Route('/', name: 'app_index')]
     public function index(Request $request): Response
     {
-        return $this->render('index/index.html.twig', [
+        return $this->render('UserInterface/Homepage.html.twig', [
             'controller_name' => 'Landing Page',
             'products' => $this->productRepository->findAll(),
             'carts' => $this->cartRepository->findAll(),
         ]);
+    }
+
+    #[Route('/Category', name: 'app_category')]
+    public function category(Request $request): Response
+    {
+        return $this->render('UserInterface/CategoryPage.html.twig');
     }
 }
