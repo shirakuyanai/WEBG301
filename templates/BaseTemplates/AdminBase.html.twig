@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+	<head></head>
+	<head>
+		<meta charset="UTF-8">
+		<title>
+			{% block title %}Welcome!
+			{% endblock %}
+		</title>
+		<link
+		rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+		{# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+		{% block stylesheets %}
+			<link rel="stylesheet" type="text/css" href="{{ asset('admin-interface/css/bootstrap.min.css')}}"/>
+			<link rel="stylesheet" href="{{ asset('admin-interface/css/datepicker3.css')}}"/>
+			<link rel="stylesheet" href="{{ asset('admin-interface/css/styles.css')}}"/>
+
+		{% endblock %}
+
+		{% block javascripts %}
+			<script src="{{ asset('admin-interface/js/lumino.glyphs.js')}}"></script>
+
+		{% endblock %}
+	</head>
+		<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<ul class="user-menu">
+						<li class="dropdown pull-right">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+								<svg class="glyph stroked male-user">
+									<use xlink:href="#stroked-male-user"></use>
+								</svg>
+								<span style="color: white;">Hello, admin@kydz.lol</span>
+								<span class="caret"></span>
+							</a>
+							<ul class="dropdown-menu" role="menu">
+								<li>
+									<a href="quantri.php?page_layout=thongtin&amp;email=admin@kydz.lol&amp;pass=admin">
+										<svg class="glyph stroked male-user">
+											<use xlink:href="#stroked-male-user"></use>
+										</svg>
+										Information of users</a>
+								</li>
+								<li>
+									<a href="#">
+										<svg class="glyph stroked gear">
+											<use xlink:href="#stroked-gear"></use>
+										</svg>
+										Settings</a>
+								</li>
+								<li>
+									<a href="./chucnang/dangxuat/dangxuat.php">
+										<svg class="glyph stroked cancel">
+											<use xlink:href="#stroked-cancel"></use>
+										</svg>Log Out</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#sidebar-collapse">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="quantri.php">
+						<span>GreenwichPhoneShop</span>AdminPanel</a>
+					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+						<ul class="nav navbar-nav">
+							<li>
+								<a href="{{ path('app_member_panel') }}">
+									Members
+								</a>
+							</li>
+							<li>
+								<a href="{{ path('app_category_panel') }}">
+									<span data-toggle="collapse" href="#sub-item-2">
+										<use xlink:href="#stroked-chevron-down"></use>
+									</span>
+									Category
+								</a>
+							</li>
+							<li>
+								<a href="{{ path('app_products_panel') }}">
+									<span data-toggle="collapse" href="#sub-item-3">
+										<use xlink:href="#stroked-chevron-down"></use>
+									</span>
+									Products
+								</a>
+							</li>
+							<li>
+								<a href="{{ path('app_order_panel') }}">
+									<span data-toggle="collapse" href="#sub-item-4">
+										<use xlink:href="#stroked-two-messages"></use>
+									</span>
+									Orders
+								</a>
+							</li>
+						</ul>
+						<form class="navbar-form navbar-top">
+							<div class="form-group">
+								<input type="text" class="form-control" placeholder="Search" control-id="ControlID-1">
+							</div>
+							<button type="submit" class="btn btn-default" control-id="ControlID-2">Submit</button>
+						</form>
+					</div>
+					<!-- /.navbar-collapse -->
+				</div>
+
+			</div>
+		</nav>
+        {% block body %}
+		{% endblock %}
+</html>
