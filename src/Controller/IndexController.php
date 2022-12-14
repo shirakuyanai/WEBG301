@@ -30,9 +30,13 @@ class IndexController extends AbstractController
         ]);
     }
 
-    #[Route('/Category', name: 'app_category')]
+    #[Route('/category', name: 'app_category')]
     public function category(Request $request): Response
     {
-        return $this->render('UserInterface/CategoryPage.html.twig');
+        return $this->render('UserInterface/CategoryPage.html.twig', [
+            'controller_name' => 'Landing Page',
+            'products' => $this->productRepository->findAll(),
+            'carts' => $this->cartRepository->findAll(),
+        ]);
     }
 }

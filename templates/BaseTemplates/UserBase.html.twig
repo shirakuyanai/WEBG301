@@ -11,8 +11,8 @@
 		{# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
 		{% block stylesheets %}
 			<link rel="stylesheet" type="text/css" href="{{ asset('user-interface/css/bootstrap.css')}}"/>
-            <link rel="stylesheet" href="{{ asset('user-interface/css/style.css')}}"/>
-            <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+			<link rel="stylesheet" href="{{ asset('user-interface/css/style.css')}}"/>
+			<link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
 		{% endblock %}
 
 		{% block javascripts %}
@@ -21,7 +21,73 @@
 		{% endblock %}
 	</head>
 	<body>
-		
-		{% block body %}{% endblock %}
+		<div class="container">
+			<!-- Header -->
+			<div id="header">
+				<div
+					class="row" style="margin: 5px">
+					<!-- search -->
+					<div id="search" class="col-md-4 col-sm-12 col-xs-12 m-5">
+						<form method="post" name="sform" action="#">
+							<input style="margin-right:5px" type="image" src="{{ asset('images/s1.png') }}" width="25" height="25">
+							<input onfocus="searchFocus();" onblur="searchBlur();" type="text" name="stext" value="Search...">
+						</form>
+					</div>
+					<!-- end search -->
+				</div>
+			</div>
+			<!-- End Header -->
+
+			<!-- Banner  -->
+			<div id="banner">
+				<div class="row">
+					<div id="logo" class="col-md-4 col-sm-12 col-xs-12">
+						<h1>
+							<a href="{{ path('app_index') }}">
+								<img src="images/LOGO.png" width="120" height="100">
+							</a>
+						</h1>
+					</div>
+					<div id="ship" class="col-md-8 col-sm-12 col-xs-12">
+						<img src="images/banner-1.png">
+					</div>
+				</div>
+			</div>
+			<!-- End Banner -->
+			{% block body %}{% endblock %}
+			<!-- Footer -->
+			<div id="footer">
+				<div class="row">
+					<div id="footer-main" class="col-md-12 col-sm-12 col-xs-12">
+						<div id="logo" class="col-md-4 col-sm-12 col-xs-12">
+							<h1>
+								<a href="{{ path('app_index') }}">
+									<img src="images/LOGO.png" width="120" height="100">
+								</a>
+							</h1>
+						</div>
+						<div class="text-center">
+							<a href="https://www.facebook.com/uniofgreenwich">
+								<i class='bx bxl-facebook bx-lg '></i>
+							</a>
+							<a href="https://www.instagram.com/uniofgreenwich/">
+								<i class='bx bxl-instagram bx-lg'></i>
+							</a>
+							<a href="https://www.youtube.com/user/UniversityGreenwich">
+								<i class='bx bxl-youtube bx-lg'></i>
+							</a>
+						</div>
+
+						<p>
+							<b>Address:</b>
+							Golden Park Tower, 2nd Pham Van Bach, Cau Giay, Ha Noi |
+							<b>Hotline</b>
+							0977 00 khong co</p>
+						<p>TBK Zone &copy;</p>
+					</div>
+				</div>
+			</div>
+			<!-- End Footer -->
+		</div>
 	</body>
 </html>
