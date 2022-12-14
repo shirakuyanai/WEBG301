@@ -1,5 +1,56 @@
 {% extends "/BaseTemplates/UserBase.html.twig" %}
 
 {% block body %}
-	
+    <div id="body">
+        <div class="row">
+            <div class="col-md-3 col-sm-12 col-xs-12">
+                <div id="menu-but" type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menu">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </div>
+                <div id="menu" class="sidebar collapse navbar-collapse">
+                    <h2 class="h2-bar">Category</h2>
+                    <ul>
+
+                        <li><a href="#">Gaming Laptop</a></li>
+                        <li><a href="#">Gaming PC</a></li>
+                        <li><a href="#">Office PC</a></li>
+                        <li><a href="#">Computer Component</a></li>
+                        <li><a href="#">Display Monitor</a></li>
+                        <li><a href="#">Gears</a></li>
+                        <li><a href="#">Music and Sound</a></li>
+                        <li><a href="#">Accessory</a></li>
+
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-9 col-sm-12 col-xs-12">
+                <div id="main">
+                    <div class="col-md-3 col-sm-6 product-item text-center" style="margin-top: 0; margin-right: 30px">
+                        <a href="#"><img width="80" height="144" src="#"></a>
+                        <h3>
+                            <a href="#">iphone 14 pro max</a>
+                        </h3>
+                        <p>12 month warranty</p>
+                        <p>New 100%</p>
+                        <p class="price">5000$</p>
+                    </div>
+
+                    <div class="col-md-3 col-sm-6 product-item text-center" style="margin-top: 0; margin-right: 30px">
+                        <a href="#"><img width="80" height="144" src="#"></a>
+                        <h3>
+                            <a href="#">iphone 14 pro max</a>
+                        </h3>
+                        <p>12 month warranty</p>
+                        <p>New 100%</p>
+                        <p class="price">5000$</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Body -->
 {% endblock %}
+
+
