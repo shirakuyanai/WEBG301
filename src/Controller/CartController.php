@@ -118,6 +118,7 @@ class CartController extends AbstractController
             return $this->redirectToRoute('app_cart_index', [], Response::HTTP_SEE_OTHER);
         }
         
+        
         $new_quantity = $request->request->get('input_quantity');
         $old_quantity = $cart->getQuantity();
         $cart->setQuantity($new_quantity);
