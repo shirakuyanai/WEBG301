@@ -1,0 +1,27 @@
+<div id="header">
+    <div class="row">
+        <!-- search -->
+        <div id="search" class="col-md-4 col-sm-12 col-xs-12">
+			<form method="post" name="sform" action="#">
+                <input type="submit" name="submit" value="">
+				<input onfocus="searchFocus();" onblur="searchBlur();" type="text" name="stext" value="Search...">
+			</form>
+		</div>
+					<!-- end search -->
+
+		<div id="login" class="col-md-4 col-sm-12 col-xs-12 text-right border" style="padding-top: 7px; margin-bottom: -4px;">
+			{% if app.user %}
+				<div>
+					Hello
+					{{ app.user.userIdentifier }},
+					<a href="{{ path('app_logout') }}">Logout</a>
+				</div>
+			{% endif %}
+			{% if app.user == null %}
+				<a href="{{ path('app_login') }}" style="text-decoration:none;">Login</a>
+							|
+				<a href="{{ path('app_register') }}" style="text-decoration:none;">Register</a>
+			{% endif %}
+		</div>
+	</div>
+</div>

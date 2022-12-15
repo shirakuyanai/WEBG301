@@ -1,0 +1,17 @@
+
+<h2 class="h2-bar">Newest product</h2>
+								<div class="row">
+									{% for product in products %}
+										<div class="col-md-3 col-sm-6 product-item text-center">
+											<a href="{{ path('app_product_show', {'id': product.id}) }}"><img width="80" height="144" src="#"></a>
+											<h3>
+												<a href="{{ path('app_product_show', {'id': product.id}) }}">{{ product.name }}</a>
+
+											</h3>
+											<p>Warranty: 12 month warranty</p>
+											<p>Status: New 100%</p>
+											<p class="price">Price:
+												{{ product.price }}$</p>
+										</div>
+									{% endfor %}
+								</div>
