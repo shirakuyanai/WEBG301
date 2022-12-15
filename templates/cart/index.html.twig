@@ -2,82 +2,9 @@
 
 {% block title %}Cart{% endblock %}
 
-{% block nav %}
-    <nav class="navbar navbar-expand-lg bg-light">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">Navbar</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="{{ path('app_index') }}">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Dropdown
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled">Disabled</a>
-                    </li>
-                </ul>
-            
-            <div style="margin-right:50px;">
-                <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
-            </div>
-
-            {% if app.user %}
-                <div>
-                    Hello {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
-                </div>
-                <a href="{{ path('app_cart_index') }}">
-                    <i class="fa-solid fa-cart-shopping">
-                        (
-                            {% set cart_count = 0 %}
-                            {% for cart in carts %}
-                                {% if cart.user == app.user %}
-                                    {% set cart_count = cart_count + cart.quantity  %}
-                                {% endif %}
-                            {% endfor %}
-                            {{ cart_count }}
-                        )
-                    </i>
-                </a>
-            {% endif %}
-
-            {% if app.user == null %}
-                <div class="m-1">
-                    <a href="{{ path('app_login') }}" style="text-decoration:none;">Login</a>
-                </div>
-                |
-                <div class="m-1">
-                    <a href="{{ path('app_register') }}" style="text-decoration:none;">Register</a>
-                </div>
-            {% endif %}
-
-            </div>
-        </div>
-    </nav>
-{% endblock %}
-
 {% block body %}
     <div class="container mt-5 p-5 border">
         <h1>Cart index</h1>
-        <a href="{{ path('app_cart_clear') }}" class="btn border text-white" style="background-color:#28aecd;" onclick="return confirm('Are you sure you want to clear the cart?')">Clear cart</a>
         <table class="table">
             <thead>
                 <tr>
@@ -90,31 +17,22 @@
             {% set form_id = 0 %}
             {% for cart in carts %}
             {% set form_id = form_id + 1 %}
-                <form method="post" id="form_{{form_id}}" action="{{ path('app_cart_edit', {'id': cart.id}) }}">
+                <form method="post" id="form_{{form_id}}" action="{{ path('app_cart_edit') }}">
                     <tr>
                         <td>{{ cart.product }}</td>
-                        {% set stock = null %}
+                        {% set stock = 0 %}
                         {% for product in products %}
                             {% if product == cart.product %}
                                 {% set stock = product.stock %}
                             {% endif %}
                         {% endfor %}
-
-                        {% set cart_quantity = cart.quantity %}
-                        
-                        {% if cart_quantity > stock %}
-                            {% set cart_quantity = stock %}
-                        {% endif %}
-                        {% if cart_quantity <= 0 %}
-                            {% set cart_quantity = 1 %}
-                        {% endif %}
-                        
                         <input name="cart_id" type="hidden" value="{{ cart.id }}">
-                        <td><input type="number" value="{{ cart_quantity }}" min=1 max="{{ stock }}" onchange="form_{{form_id}}.submit()" name="input_quantity"></td>
+                        <td><input type="number" value="{{ cart.quantity }}" min=1 max="{{ stock }}" onchange="form_{{form_id}}.submit()" name="input_quantity"></td>
+                        
                         <td>
-                            <button formaction="{{ path('app_cart_delete', {'id': cart.id}) }}" method="post" onclick="return confirm('Are you sure you want to delete this item?')" class="btn">
+                            <a href="{{ path('app_cart_delete', {'id': cart.id}) }}" method="post" onclick="return confirm('Are you sure you want to delete this item?')" class="btn">
                                 <i class="fa fa-trash" aria-hidden="true"></i>
-                            </button>
+                            </a>
                         </td>
                     </tr>
                 </form>
@@ -125,6 +43,5 @@
             {% endfor %}
             </tbody>
         </table>
-        <a class="btn text-white" style="background-color:#28aecd;" onclick="return confirm('Are you sure you want to place the order?')" href="{{ path ('app_submit_order') }}">Check out</a>
     </div>
 {% endblock %}

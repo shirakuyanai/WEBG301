@@ -1,10 +1,8 @@
 
 ###> symfony/framework-bundle ###
 /.env.local
-/Applications/XAMPP/xamppfiles/htdocs/WEBG301/migrations
 /.env.local.php
 /.env.*.local
-/Applications/XAMPP/xamppfiles/htdocs/WEBG301/.env
 /config/secrets/prod/prod.decrypt.private.php
 /public/bundles/
 /var/
@@ -20,5 +18,3 @@
 .phpunit.result.cache
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
-
-

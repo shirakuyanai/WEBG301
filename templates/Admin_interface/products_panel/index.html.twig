@@ -1,0 +1,212 @@
+{% extends '/BaseTemplates/AdminBase.html.twig' %}
+
+{% block body %}
+	<body>
+
+		<script type="text/javascript" src="ckeditor/ckeditor.js"></script>
+
+
+
+		<div id="sidebar-collapse" class="sidebar"></div>
+		<!--/.sidebar-->
+
+		<div class="mx-auto main">
+			<script>
+				function xoasp() {
+var conf = confirm("Do you want to delete this product?");
+return conf;
+}
+			</script>
+
+			<div class="row">
+				<ol class="breadcrumb">
+					<li>
+						<a href="quantri.php">
+							<svg class="glyph stroked home">
+								<use xlink:href="#stroked-home"></use>
+							</svg>
+						</a>
+					</li>
+					<li class="active"></li>
+				</ol>
+			</div>
+			<!--/.row-->
+
+			<div class="row">
+				<div class="col-lg-12">
+					<h1 class="page-header">Manage products</h1>
+				</div>
+			</div>
+			<!--/.row-->
+
+
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="panel panel-default">
+						<div class="panel-body" style="position: relative;">
+							<a href="{{ path('app_product_new') }}" class="btn btn-primary" style="margin: 10px 0 20px 0; position: absolute;">Add new product</a>
+							<div class="bootstrap-table">
+								<div class="fixed-table-toolbar">
+									<div class="columns btn-group pull-right">
+										<button class="btn btn-default" type="button" name="refresh" title="Refresh" control-id="ControlID-3">
+											<i class="glyphicon glyphicon-refresh icon-refresh"></i>
+										</button>
+										<button class="btn btn-default" type="button" name="toggle" title="Toggle" control-id="ControlID-4">
+											<i class="glyphicon glyphicon glyphicon-list-alt icon-list-alt"></i>
+										</button>
+										<div class="keep-open btn-group" title="Columns">
+											<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" control-id="ControlID-5">
+												<i class="glyphicon glyphicon-th icon-th"></i>
+												<span class="caret"></span>
+											</button>
+											<ul class="dropdown-menu" role="menu">
+												<li>
+													<label><input type="checkbox" data-field="0" value="0" checked="checked" control-id="ControlID-6">
+														ID</label>
+												</li>
+												<li>
+													<label><input type="checkbox" data-field="1" value="1" checked="checked">
+														Product name</label>
+												</li>
+												<li>
+													<label><input type="checkbox" data-field="2" value="2" checked="checked">
+														Price</label>
+												</li>
+												<li>
+													<label><input type="checkbox" data-field="3" value="3" checked="checked">
+														Provider</label>
+												</li>
+												<li>
+													<label><input type="checkbox" data-field="4" value="4" checked="checked">
+														Image</label>
+												</li>
+												<li>
+													<label><input type="checkbox" data-field="5" value="5" checked="checked">
+														Edit</label>
+												</li>
+												<li>
+													<label><input type="checkbox" data-field="6" value="6" checked="checked">
+													</label>
+																							
+												</li>
+											</ul>
+										</div>
+									</div>
+									<div class="pull-right search"><input class="form-control" type="text" placeholder="Search..." control-id="ControlID-7"></div>
+								</div>
+								<div class="fixed-table-container">
+									<div class="fixed-table-header">
+										<table></table>
+									</div>
+									<div class="fixed-table-body">
+										<table data-toggle="table" data-show-refresh="true" data-show-toggle="true" data-show-columns="true" data-search="true" data-select-item-name="toolbar1" data-sort-name="name" data-sort-order="desc" class="table table-hover">
+											<thead>
+												<tr>
+													<th style="">
+														<div class="th-inner sortable">ID</div>
+														<div class="fht-cell"></div>
+													</th>
+													<th style="">
+														<div class="th-inner sortable">Product name<span class="order">
+																<span class="caret" style="margin: 10px 5px;"></span>
+															</span>
+														</div>
+														<div class="fht-cell"></div>
+													</th>
+													<th style="">
+														<div class="th-inner sortable">Price</div>
+														<div class="fht-cell"></div>
+													</th>
+													<th style="">
+														<div class="th-inner sortable">Provider</div>
+														<div class="fht-cell"></div>
+													</th>
+													<th style="">
+														<div class="th-inner sortable">Image</div>
+														<div class="fht-cell"></div>
+													</th>
+													<th style="">
+														<div class="th-inner sortable">Edit</div>
+														<div class="fht-cell"></div>
+													</th>
+													<th style="">
+														<div class="th-inner sortable">Delete</div>
+														<div class="fht-cell"></div>
+													</th>
+												</tr>
+											</thead>
+											{% for product in products %}
+												<form method="post">
+													<div>
+														<tr>	
+															<td style="">{{product.id}}</td>
+															<td style="">
+																<a href="#">{{product.name}}
+																</a>
+															</td>
+															<td style="">{{ product.price }}</td>
+															<td style="">Vivo</td>
+															<td style="">
+																<span class="thumb"><img width="80px" height="150px" src="{{ asset('admin-interface/anh/p16.png')}}"></span>
+															</td>
+															<td style="">
+																<a href="{{ path('app_product_edit', {'id': product.id}) }}">
+																	<span>
+																		<svg class="glyph stroked brush" style="width: 20px;height: 20px;">
+																			<use xlink:href="#stroked-brush"></use>
+																		</svg>
+																	</span>
+																</a>
+															</td>
+															<td style="">
+																<a onclick="" method="post" href="{{ path('app_product_delete', {'id': product.id}) }}">
+																	<span>
+																		<svg class="glyph stroked cancel" style="width: 20px;height: 20px;">
+																			<use xlink:href="#stroked-cancel">
+																			</use>
+																		</svg>
+																	</span>
+																</a>
+															</td>
+														</tr>
+													</div>
+												</form>
+											{% endfor %}
+											
+										</table>
+									</div>
+									<div class="fixed-table-pagination"></div>
+								</div>
+							</div>
+							<div class="clearfix"></div>
+							<ul class="pagination" style="float: right;">
+								<li class="active">
+									<a href="quantri.php?page_layout=danhsachsp&amp;page=1">1</a>
+								</li>
+								<li>
+									<a href="quantri.php?page_layout=danhsachsp&amp;page=2">2</a>
+								</li>
+								<li>
+									<a href="quantri.php?page_layout=danhsachsp&amp;page=3">3</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>	
+			</div>
+			<!--/.row-->
+		</div>
+		<!--/.main-->
+
+		{# <script src="js/jquery-1.11.1.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script src="js/chart.min.js"></script>
+		<script src="js/chart-data.js"></script>
+		<script src="js/easypiechart.js"></script>
+		<script src="js/easypiechart-data.js"></script>
+		<script src="js/bootstrap-datepicker.js"></script>
+		<script src="js/bootstrap-table.js"></script>
+		<link rel="stylesheet" href="css/bootstrap-table.css"> #}
+
+	</body>
+{% endblock %}

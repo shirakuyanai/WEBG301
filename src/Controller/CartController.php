@@ -11,6 +11,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\HeaderUtils;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/cart')]
@@ -21,6 +22,7 @@ class CartController extends AbstractController
     private $productRepository;
     private $userRepository;
     private $managerRegistry;
+
 
     public function __construct(CartRepository $cartRepository, ProductRepository $productRepository, UserRepository $userRepository, ManagerRegistry $managerRegistry)
     {
@@ -34,35 +36,15 @@ class CartController extends AbstractController
     public function index(): Response
     {
         $user = $this->getUser();
-        if (!$user) {
+        if (!$user)
+        {
             return $this->redirectToRoute('app_login');
         }
-
         $username = $user->getUserIdentifier();
         return $this->render('cart/index.html.twig', [
             'carts' => $this->cartRepository->findByUser($user),
             'products' => $this->productRepository->findAll(),
-            'username' => $username,
         ]);
-    }
-    #[Route('/clear', name: 'app_cart_clear', methods: ['GET', 'POST'])]
-    public function clear(): Response
-    {
-        $username = $this->getUser()->getUserIdentifier();
-        if (!$username)
-        {
-            return $this->redirectToRoute('app_login', [], Response::HTTP_SEE_OTHER);
-        }
-
-        $carts = $this->cartRepository->findByUser($this->getUser());
-        foreach ($carts as $cart)
-        {
-            $product = $cart->getProduct();
-            $product->setStock($product->getStock() + 1);
-            $this->cartRepository->remove($cart, true);
-        }
-
-        return $this->redirectToRoute('app_cart_index', [], Response::HTTP_SEE_OTHER);
     }
 
     #[Route('/add_to_cart/{product_id}/{username}/{quantity}', name: 'app_product_add_to_cart', methods: ['GET', 'POST'])]
@@ -84,27 +66,49 @@ class CartController extends AbstractController
             $cart->setProduct($product);
         }
 
-        if ($cart->getQuantity() + $quantity > $product->getStock())
-        {
-            return new Response("A problem has occured! Please try again later.", Response::HTTP_BAD_REQUEST,
-            ['content-type' => 'text/html']);
-        }
-
         $cart->setQuantity($cart->getQuantity() + $quantity);
-        // $product->setStock($product->getStock() - $quantity);
+        $product->setStock($product->getStock() - $quantity);
 
         $manager = $this->managerRegistry->getManager();
         $manager->persist($cart);
-        // $manager->persist($product);
+        $manager->persist($product);
         $manager->flush();
 
-        return new Response("Item added to cart successfully!", Response::HTTP_CREATED, // 201
+        return new Response("Blog added successfully!", Response::HTTP_CREATED, // 201
         ['content-type' => 'text/html']);
     }
 
-    #[Route('/{id}/edit', name: 'app_cart_edit', methods: ['GET', 'POST'])]
-    public function edit($id, Request $request): Response
+    #[Route('/new', name: 'app_cart_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, CartRepository $cartRepository): Response
     {
+        $cart = new Cart();
+        $form = $this->createForm(CartType::class, $cart);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $cartRepository->save($cart, true);
+
+            return $this->redirectToRoute('app_cart_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('cart/new.html.twig', [
+            'cart' => $cart,
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/{id}', name: 'app_cart_show', methods: ['GET'])]
+    public function show(Cart $cart): Response
+    {
+        return $this->render('cart/show.html.twig', [
+            'cart' => $cart,
+        ]);
+    }
+
+    #[Route('/edit', name: 'app_cart_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request): Response
+    {
+        $id = $request->request->get('cart_id');
         $cart = $this->cartRepository->find($id);
 
         if (!$cart)
@@ -115,13 +119,13 @@ class CartController extends AbstractController
         }
         
         $new_quantity = $request->request->get('input_quantity');
-        // $old_quantity = $cart->getQuantity();
+        $old_quantity = $cart->getQuantity();
         $cart->setQuantity($new_quantity);
         
-        // $product = $this->productRepository->find($cart->getProduct());
-        // $product->setStock($product->getStock() + $old_quantity - $new_quantity);
+        $product = $this->productRepository->find($cart->getProduct());
+        $product->setStock($product->getStock() + $old_quantity - $new_quantity);
         $manager = $this->managerRegistry->getManager();
-        // $manager->persist($product);
+        $manager->persist($product);
         $manager->persist($cart);
         $manager->flush();
 
@@ -131,7 +135,7 @@ class CartController extends AbstractController
         //     ['content-type' => 'text/html']);
     }
 
-    #[Route('/{id}/delete', name: 'app_cart_delete', methods: ['POST'])]
+    #[Route('/{id}', name: 'app_cart_delete', methods: ['POST'])]
     public function delete($id): Response
     {
         $cart = $this->cartRepository->find($id);
@@ -141,12 +145,10 @@ class CartController extends AbstractController
             return new Response("Item does not exist.", Response::HTTP_BAD_REQUEST,
             ['content-type' => 'text/html']);
         }
-        // $product = $this->productRepository->find($cart->getProduct());
-        // $product->setStock($product->getStock() + $cart->getQuantity());
-        
+        $product = $this->productRepository->find($cart->getProduct());
+        $product->setStock($product->getStock() + $cart->getQuantity());
         $manager = $this->managerRegistry->getManager();
-        // $manager->persist($product);
-        $manager->persist($cart);
+        $manager->persist($product);
         $manager->flush();
         $this->cartRepository->remove($cart, true);
 
