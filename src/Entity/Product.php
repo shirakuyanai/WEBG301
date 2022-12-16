@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ProductRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
@@ -25,6 +26,18 @@ class Product
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
     private ?Category $category = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $warranty = null;
+
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $gift = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $model = null;
+
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $image = null;
 
     public function getId(): ?int
     {
@@ -80,6 +93,54 @@ class Product
     public function setCategory(?Category $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    public function getWarranty(): ?string
+    {
+        return $this->warranty;
+    }
+
+    public function setWarranty(string $warranty): self
+    {
+        $this->warranty = $warranty;
+
+        return $this;
+    }
+
+    public function getGift(): ?string
+    {
+        return $this->gift;
+    }
+
+    public function setGift(string $gift): self
+    {
+        $this->gift = $gift;
+
+        return $this;
+    }
+
+    public function getModel(): ?string
+    {
+        return $this->model;
+    }
+
+    public function setModel(string $model): self
+    {
+        $this->model = $model;
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(string $image): self
+    {
+        $this->image = $image;
 
         return $this;
     }

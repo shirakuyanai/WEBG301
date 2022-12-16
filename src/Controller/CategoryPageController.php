@@ -3,16 +3,13 @@
 namespace App\Controller;
 
 use App\Repository\CartRepository;
-use App\Repository\CategoryRepository;
 use App\Repository\ProductRepository;
-use App\Repository\UserRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
+use App\Repository\CategoryRepository;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\HeaderUtils;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class IndexController extends AbstractController
+class CategoryPageController extends AbstractController
 {
     private $productRepository;
     private $cartRepository;
@@ -23,12 +20,11 @@ class IndexController extends AbstractController
         $this->cartRepository = $cartRepository;
         $this->categoryRepository = $categoryRepository;
     }
-    #[Route('/', name: 'app_index')]
-    public function index(Request $request): Response
+    #[Route('/productlist/{category_id}', name: 'app_category_page', methods : ['POST', 'GET'])]
+    public function index($category_id): Response
     {
-        return $this->render('/UserInterface/Homepage.html.twig', [ 
-            'controller_name' => 'Landing Page',
-            'products' => $this->productRepository->findAll(),
+        return $this->render('/UserInterface/ProductByCategory.html.twig', [
+            'products' => $this->productRepository->findByCategory($category_id),
             'carts' => $this->cartRepository->findAll(),
             'categories' => $this->categoryRepository->findAll(),
         ]);
