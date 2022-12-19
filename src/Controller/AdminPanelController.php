@@ -62,7 +62,7 @@ class AdminPanelController extends AbstractController
     //     ]);
     // }
 
-    #[Route('/products', name: 'app_admin_product')]
+    #[Route('/product', name: 'app_admin_product')]
     public function show_product(Request $request, UserRepository $userRepository): Response
     {
         // $username = $request->request->getUser()->getUserIdentifier();
@@ -77,64 +77,4 @@ class AdminPanelController extends AbstractController
             'products' => $this->productRepository->findAll(),
         ]);
     }
-
-    #[Route('/product/{id}/delete', name: 'app_product_delete', methods: ['GET','POST'])]
-    public function delete(Request $request, $id): Response
-    {
-        
-        $product = $this->productRepository->find($id);
-            $this->productRepository->remove($product, true);
-
-        return $this->redirectToRoute('app_admin_product', [], Response::HTTP_SEE_OTHER);
-    }
-
-    
-
-    #[Route('/product/new', name: 'app_product_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, ProductRepository $productRepository): Response
-    {
-        $product = new Product();
-        $form = $this->createForm(ProductType::class, $product);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $productRepository->save($product, true);
-
-            return $this->redirectToRoute('app_admin_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('/Admin_interface/products_panel/new.html.twig', [
-            'product' => $product,
-            'form' => $form,
-        ]);
-    }
-    
-
-    // #[Route('/product/{id}', name: 'app_product_show', methods: ['GET'])]
-    // public function show(Product $product): Response
-    // {
-    //     return $this->render('product/show.html.twig', [
-    //         'product' => $product,
-    //     ]);
-    // }
-
-    #[Route('/product/{id}/edit', name: 'app_product_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Product $product, ProductRepository $productRepository): Response
-    {
-        $form = $this->createForm(ProductType::class, $product);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $productRepository->save($product, true);
-
-            return $this->redirectToRoute('app_admin_product', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('/Admin_interface/products_panel/edit_product.html.twig', [
-            'product' => $product,
-            'form' => $form,
-        ]);
-    }
-
-    
 }
