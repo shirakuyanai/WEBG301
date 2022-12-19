@@ -1,8 +1,7 @@
-<h2 class="h2-bar">Newest product</h2>
 <div class="row">
 	{% for product in products %}
 		<div class="col-md-3 col-sm-6 product-item text-center">
-			<a href="{{ path('app_product_show', {'id': product.id}) }}"><img width="80" height="144" src="{{product.image}}"></a>
+			<a href="{{ path('app_product_show', {'id': product.id}) }}"><img width="80" height="144" src="/{{ product.image }}"></a>
 			<h3>
 				<a href="{{ path('app_product_show', {'id': product.id}) }}">{{ product.name }}</a>
 

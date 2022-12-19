@@ -30,14 +30,17 @@ class Product
     #[ORM\Column(type: Types::TEXT)]
     private ?string $image = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $warranty = null;
+   
+    
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $gift = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $model = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $warranty = null;
 
     public function getId(): ?int
     {
@@ -109,17 +112,6 @@ class Product
         return $this;
     }
 
-    public function getWarranty(): ?\DateTimeInterface
-    {
-        return $this->warranty;
-    }
-
-    public function setWarranty(\DateTimeInterface $warranty): self
-    {
-        $this->warranty = $warranty;
-
-        return $this;
-    }
 
     public function getGift(): ?string
     {
@@ -141,6 +133,18 @@ class Product
     public function setModel(?string $model): self
     {
         $this->model = $model;
+
+        return $this;
+    }
+
+    public function getWarranty(): ?string
+    {
+        return $this->warranty;
+    }
+
+    public function setWarranty(string $warranty): self
+    {
+        $this->warranty = $warranty;
 
         return $this;
     }
