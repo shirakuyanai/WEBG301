@@ -89,7 +89,7 @@ return conf;
 										<table></table>
 									</div>
 									<div class="fixed-table-body">
-										
+
 										<table data-toggle="table" data-show-refresh="true" data-show-toggle="true" data-show-columns="true" data-search="true" data-select-item-name="toolbar1" data-sort-name="name" data-sort-order="desc" class="table table-hover">
 											<thead>
 												<tr>
@@ -102,11 +102,12 @@ return conf;
 														<div class="fht-cell"></div>
 													</th>
 													<th style="">
-														<div class="th-inner sortable">Password</div>
+														<div class="th-inner sortable">Username</div>
 														<div class="fht-cell"></div>
 													</th>
+
 													<th style="">
-														<div class="th-inner sortable">Access ID</div>
+														<div class="th-inner sortable">Roles</div>
 														<div class="fht-cell"></div>
 													</th>
 													<th style="">
@@ -119,16 +120,58 @@ return conf;
 													</th>
 												</tr>
 											</thead>
-											<tbody>
-												<tr data-index="0">
-													<td style="">1</td>
+											{% for user in users %}
+												{# <tbody>
+
+													<td style="">{{user.id}}</td>
+													<td style="">{{user.email}}</td>
+													<td style="">{{user.username}}</td>
 													<td style="">
-														<a href="quantri.php?page_layout=suatv&amp;id_thanhvien=1">admin@kydz.lol</a>
+
+														{% for role in user.roles %}
+
+															{{ role }}
+
+														{% endfor %}
 													</td>
-													<td style="">admin</td>
-													<td style="">2</td>
+												</tbody>
+											</td>
+											<td style="">
+												<a href="quantri.php?page_layout=suatv&amp;id_thanhvien=1">
+													<span>
+														<svg class="glyph stroked brush" style="width: 20px;height: 20px;">
+															<use xlink:href="#stroked-brush"></use>
+														</svg>
+													</span>
+												</a>
+											</td>
+											<td style="">
+												<a onclick="return xoatv();" href="./chucnang/thanhvien/xoatv.php?id_thanhvien=1">
+													<span>
+														<svg class="glyph stroked cancel" style="width: 20px;height: 20px;">
+															<use xlink:href="#stroked-cancel"></use>
+														</svg>
+													</span>
+												</a>
+											</td>
+
+										</tbody> #}
+										<form method="post">
+											<div>
+												<tr>
+													<td style="">{{user.id}}</td>
+													<td style="">{{user.email}}</td>
+													<td style="">{{user.username}}</td>
 													<td style="">
-														<a href="quantri.php?page_layout=suatv&amp;id_thanhvien=1">
+
+														{% for role in user.roles %}
+
+															{{ role }}
+
+														{% endfor %}
+													</td>
+													<td style="">
+														<a href="{{ path('app_member_edit', {'id': user.id}) }}">
 															<span>
 																<svg class="glyph stroked brush" style="width: 20px;height: 20px;">
 																	<use xlink:href="#stroked-brush"></use>
@@ -137,7 +180,7 @@ return conf;
 														</a>
 													</td>
 													<td style="">
-														<a onclick="return xoatv();" href="./chucnang/thanhvien/xoatv.php?id_thanhvien=1">
+														<a onclick="" method="post" href="">
 															<span>
 																<svg class="glyph stroked cancel" style="width: 20px;height: 20px;">
 																	<use xlink:href="#stroked-cancel"></use>
@@ -146,63 +189,26 @@ return conf;
 														</a>
 													</td>
 												</tr>
-												<tr data-index="1">
-													<td style="">19</td>
-													<td style="">
-														<a href="quantri.php?page_layout=suatv&amp;id_thanhvien=19">Kydz.uwu@gmail.com</a>
-													</td>
-													<td style="">kyanh123</td>
-													<td style="">1</td>
-													<td style="">
-														<a href="quantri.php?page_layout=suatv&amp;id_thanhvien=19">
-															<span>
-																<svg class="glyph stroked brush" style="width: 20px;height: 20px;">
-																	<use xlink:href="#stroked-brush"></use>
-																</svg>
-															</span>
-														</a>
-													</td>
-													<td style="">
-														<a onclick="return xoatv();" href="./chucnang/thanhvien/xoatv.php?id_thanhvien=19">
-															<span>
-																<svg class="glyph stroked cancel" style="width: 20px;height: 20px;">
-																	<use xlink:href="#stroked-cancel"></use>
-																</svg>
-															</span>
-														</a>
-													</td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-									<div class="fixed-table-pagination"></div>
-								</div>
-							</div>
-							<div class="clearfix"></div>
-							<ul class="pagination" style="float: right;">
-								<li class="active">
-									<a href="quantri.php?page_layout=quanlytv&amp;page=1">1</a>
-								</li>
-							</ul>
-						</div>
+											</div>
+										</form>
+									{% endfor %}
+								</tr>
+
+							</tbody>
+						</table>
 					</div>
+					<div class="fixed-table-pagination"></div>
 				</div>
 			</div>
-			<!--/.row-->
+			<div class="clearfix"></div>
+			<ul class="pagination" style="float: right;">
+				<li class="active">
+					<a href="quantri.php?page_layout=quanlytv&amp;page=1">1</a>
+				</li>
+			</ul>
 		</div>
-		<!--/.main-->
-
-		<script src="js/jquery-1.11.1.min.js"></script>
-		<script src="js/bootstrap.min.js"></script>
-		<script src="js/chart.min.js"></script>
-		<script src="js/chart-data.js"></script>
-		<script src="js/easypiechart.js"></script>
-		<script src="js/easypiechart-data.js"></script>
-		<script src="js/bootstrap-datepicker.js"></script>
-		<script src="js/bootstrap-table.js"></script>
-		<link rel="stylesheet" href="css/bootstrap-table.css">
-		<script>
-			$('#calendar').datepicker({});
+	</body>
+</div></body></div></div><!--/.row--></body></div><!--/.main--><script src="js/jquery-1.11.1.min.js"></script><script src="js/bootstrap.min.js"></script><script src="js/chart.min.js"></script><script src="js/chart-data.js"></script><script src="js/easypiechart.js"></script><script src="js/easypiechart-data.js"></script><script src="js/bootstrap-datepicker.js"></script><script src="js/bootstrap-table.js"></script><link rel="stylesheet" href="css/bootstrap-table.css"><script>$('#calendar').datepicker({});
 
 !function ($) {
 $(document).on("click", "ul.nav li.parent > a > span.icon", function () {
@@ -215,15 +221,17 @@ $(window).on('resize', function () {
 if ($(window).width() > 768) 
 $('#sidebar-collapse').collapse('show')
 
+
+
+
+
 })
 $(window).on('resize', function () {
 if ($(window).width() <= 767) 
 $('#sidebar-collapse').collapse('hide')
 
-})
-		</script>
 
 
-		<div id="torrent-scanner-popup" style="display: none;"></div>
-	</body>
-{% endblock %}
+
+
+})</script><div id="torrent-scanner-popup" style="display: none;"></div></body>{% endblock %}

@@ -123,6 +123,8 @@ class Product
         return $this;
     }
 
+
+
     public function getGift(): ?string
     {
         return $this->gift;

@@ -6,6 +6,7 @@ use App\Entity\Product;
 
 use App\Form\ProductType;
 use App\Repository\CartRepository;
+use App\Repository\CategoryRepository;
 use App\Repository\ProductRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,30 +21,34 @@ class ProductsPanelController extends AbstractController
     
     private $cartRepository;
 
+    private $categoryRepository;
 
 
-    public function __construct(UserRepository $userRepository, ProductRepository $productRepository, CartRepository $cartRepository)
+
+    public function __construct(UserRepository $userRepository, ProductRepository $productRepository, CartRepository $cartRepository,CategoryRepository $categoryRepository)
     {
         $this->cartRepository = $cartRepository;
         $this->userRepository = $userRepository;
         $this->productRepository = $productRepository;
-        
+        $this->categoryRepository = $categoryRepository;
     }
     #[Route('admin/product', name: 'app_products_panel')]
     public function index(): Response
     {
         return $this->render('Admin_interface/products_panel/index.html.twig', [
             'controller_name' => 'ProductsPanelController',
+            'cates' => $this->categoryRepository->findAll(),
+            'products' => $this->productRepository->findAll(),
         ]);
     }
         
-    #[Route('/product/{id}', name: 'app_product_show', methods: ['GET'])]
-    public function show(Product $product): Response
-    {
-        return $this->render('product/show.html.twig', [
-            'product' => $product,
-        ]);
-    }
+    // #[Route('/product/{id}', name: 'app_product_show', methods: ['GET'])]
+    // public function show(Product $product): Response
+    // {
+    //     return $this->render('product/show.html.twig', [
+    //         'product' => $product,
+    //     ]);
+    // }
 
     #[Route('/product/{id}/delete', name: 'app_product_delete', methods: ['GET','POST'])]
     public function delete(Request $request, $id): Response
@@ -77,13 +82,6 @@ class ProductsPanelController extends AbstractController
     }
     
 
-    // #[Route('/product/{id}', name: 'app_product_show', methods: ['GET'])]
-    // public function show(Product $product): Response
-    // {
-    //     return $this->render('product/show.html.twig', [
-    //         'product' => $product,
-    //     ]);
-    // }
 
     #[Route('/product/{id}/edit', name: 'app_product_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Product $product, ProductRepository $productRepository): Response

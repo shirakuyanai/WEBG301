@@ -21,7 +21,7 @@ return conf;
 			<div class="row">
 				<ol class="breadcrumb">
 					<li>
-						<a href="quantri.php">
+						<a href="{{ path('app_admin_index') }}">
 							<svg class="glyph stroked home">
 								<use xlink:href="#stroked-home"></use>
 							</svg>
@@ -95,9 +95,9 @@ return conf;
 									<div class="pull-right search"><input class="form-control" type="text" placeholder="Search..." control-id="ControlID-7"></div>
 								</div>
 								<div class="fixed-table-container">
-									<div class="fixed-table-header">
+									{# <div class="fixed-table-header">
 										<table></table>
-									</div>
+									</div> #}
 									<div class="fixed-table-body">
 										<table data-toggle="table" data-show-refresh="true" data-show-toggle="true" data-show-columns="true" data-search="true" data-select-item-name="toolbar1" data-sort-name="name" data-sort-order="desc" class="table table-hover">
 											<thead>
@@ -118,11 +118,23 @@ return conf;
 														<div class="fht-cell"></div>
 													</th>
 													<th style="">
-														<div class="th-inner sortable">Provider</div>
+														<div class="th-inner sortable">Category</div>
 														<div class="fht-cell"></div>
 													</th>
 													<th style="">
 														<div class="th-inner sortable">Image</div>
+														<div class="fht-cell"></div>
+													</th>
+													<th style="">
+														<div class="th-inner sortable">Warranty</div>
+														<div class="fht-cell"></div>
+													</th>
+													<th style="">
+														<div class="th-inner sortable">Gift</div>
+														<div class="fht-cell"></div>
+													</th>
+													<th style="">
+														<div class="th-inner sortable">Model</div>
 														<div class="fht-cell"></div>
 													</th>
 													<th style="">
@@ -145,10 +157,13 @@ return conf;
 																</a>
 															</td>
 															<td style="">{{ product.price }}</td>
-															<td style="">Vivo</td>
+															<td style="">{{product.category}}</td>
 															<td style="">
-																<span class="thumb"><img width="80px" height="150px" src="{{ asset('admin-interface/anh/p16.png')}}"></span>
+																<span class="thumb"><img width="80px" height="150px" src="{{product.image}}"></span>
 															</td>
+															<td style="">{{product.warranty|date('d-m-Y') }}</td>
+															<td style="">{{product.gift }}</td>
+															<td style="">{{product.model }}</td>
 															<td style="">
 																<a href="{{ path('app_product_edit', {'id': product.id}) }}">
 																	<span>
