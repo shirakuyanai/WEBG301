@@ -1,0 +1,30 @@
+{% extends "BaseTemplates/UserBase.html.twig" %}
+
+{% block body %}
+	{% include "UserInterface/NavBar.html.twig" %}
+	<div
+		class="container">
+		<!-- Banner  -->
+		{% include "/UserInterface/Banner.html.twig" %}
+		<!-- End Banner -->
+
+        
+		<!-- Body -->
+			<div id="body"> <div class="row">
+				<div class="col-md-3 col-sm-12 col-xs-12">
+					{% include "UserInterface/SideBar.html.twig" %}
+				</div>
+				<div class="col-md-9 col-sm-12 col-xs-12" style="margin-top:15px">
+					<div>
+						{% include "UserInterface/Index/Products.html.twig" %}
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- End Body -->
+
+		<!-- Footer -->
+		{% include "UserInterface/Footer.html.twig" %}
+		<!-- End Footer -->
+	</div>
+</body>{% endblock %}

@@ -18,6 +18,7 @@
 		{% endblock %}
 
 		{% block javascripts %}
+			<script src="https://kit.fontawesome.com/89158a5fb7.js" crossorigin="anonymous"></script>
 			<script src="{{ asset('admin-interface/js/lumino.glyphs.js')}}"></script>
 			<script src="{{ asset('admin-interface/js/jquery-1.11.1.min.js')}}"></script>
 			<script src="{{ asset('admin-interface/js/bootstrap.min.js')}}"></script>
@@ -79,11 +80,9 @@ $('#sidebar-collapse').collapse('hide')
 						</a>
 						<ul class="dropdown-menu" role="menu">
 							<li>
-								<a href="quantri.php?page_layout=thongtin&amp;email=admin@kydz.lol&amp;pass=admin">
-									<svg class="glyph stroked male-user">
-										<use xlink:href="#stroked-male-user"></use>
-									</svg>
-									Information of users</a>
+								<a href="{{ path('app_index') }}">
+									<i class="fa-solid fa-house"></i>
+									Back to Homepage</a>
 							</li>
 							<li>
 								<a href="#">

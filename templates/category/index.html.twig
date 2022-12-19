@@ -1,3 +1,38 @@
+{# <!DOCTYPE html>
+
+<title>Category index</title>
+
+{% block body %}
+    <h1>Category index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for category in categories %}
+            <tr>
+                <td>{{ category.id }}</td>
+                <td>{{ category.title }}</td>
+                <td>
+                    <a href="{{ path('app_category_show', {'id': category.id}) }}">show</a>
+                    <a href="{{ path('app_category_edit', {'id': category.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_category_new') }}">Create new</a>
+{% endblock %} #}
 
 {% extends '/BaseTemplates/AdminBase.html.twig' %}
 
@@ -40,7 +75,7 @@ return conf;
 					<div class="panel panel-default">
 
 						<div class="panel-body" style="position: relative;">
-							<a href="{{ path('app_category_new') }}" class="btn btn-primary" style="margin: 10px 0 20px 0; position: absolute;">Add new category</a>
+							<a href="quantri.php?page_layout=themdm" class="btn btn-primary" style="margin: 10px 0 20px 0; position: absolute;">Add new category</a>
 							<div class="bootstrap-table">
 								<div class="fixed-table-toolbar">
 									<div class="columns btn-group pull-right">
@@ -82,7 +117,7 @@ return conf;
 										<table></table>
 									</div>
 									<div class="fixed-table-body">
-
+										
 										<table data-toggle="table" data-show-refresh="true" data-show-toggle="true" data-show-columns="true" data-search="true" data-select-item-name="toolbar1" data-sort-name="name" data-sort-order="desc" class="table table-hover">
 											<thead>
 												<tr>
@@ -105,61 +140,67 @@ return conf;
 												</tr>
 											</thead>
 											<tbody>
-												{% for category in categories %}
-													<form method="post">
-														<td style="">{{ category.id}}</td>
-														<td style="">
-															<a href="#">{{category.title}}</a>
-														</td>
-														<td>
-															<a method="post" href="{{ path('app_category_edit', {'id': category.id} ) }}">
-																<i class="fa-sharp fa-solid fa-pen-to-square"></i>
-															</a>
-														</td>
-														<td>
-															<a method="post" href="{{ path('app_category_delete', {'id': category.id} ) }}">
-																<i class="fa-solid fa-trash"></i>
-															</a>
-														</td>
-													</tr>
-												</form>
-											{% endfor %}
-
-										</tbody>
-									</table>
+                                            {% for category in categories %}
+                                                <tr data-index="0">
+													<td style="">{{ category.id}}</td>
+													<td style="">
+														<a href="#">{{category.title}}</a>
+													</td>
+													<td style="">
+														<a href="#">
+															<span>
+																<svg class="glyph stroked brush" style="width: 20px;height: 20px;">
+																	{# <use xlink:href="{{ path('#') }}"></use> #}
+																</svg>
+															</span>
+														</a>
+													</td>
+													<td style="">
+														<a onclick="return xoadanhmuc();" href="./chucnang/danhmuc/xoadm.php?id_dm=2">
+															<span>
+																<svg class="glyph stroked cancel" style="width: 20px;height: 20px;">
+																	<use xlink:href="#stroked-cancel"></use>
+																</svg>
+															</span>
+														</a>
+													</td>
+												</tr>
+                                            {% endfor %}
+												
+											</tbody>
+										</table>
+									</div>
+									<div class="fixed-table-pagination"></div>
 								</div>
-								<div class="fixed-table-pagination"></div>
 							</div>
+							<div class="clearfix"></div>
+							<ul class="pagination" style="float: right;">
+								<li class="active">
+									<a href="quantri.php?page_layout=danhsachdm&amp;page=1">1</a>
+								</li>
+								<li>
+									<a href="quantri.php?page_layout=danhsachdm&amp;page=2">2</a>
+								</li>
+							</ul>
 						</div>
-						<div class="clearfix"></div>
-						<ul class="pagination" style="float: right;">
-							<li class="active">
-								<a href="quantri.php?page_layout=danhsachdm&amp;page=1">1</a>
-							</li>
-							<li>
-								<a href="quantri.php?page_layout=danhsachdm&amp;page=2">2</a>
-							</li>
-						</ul>
 					</div>
 				</div>
 			</div>
+			<!--/.row-->
 		</div>
-		<!--/.row-->
-	</body>
-</div>
-<!--/.main-->
+		<!--/.main-->
 
-<script src="js/jquery-1.11.1.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/chart.min.js"></script>
-<script src="js/chart-data.js"></script>
-<script src="js/easypiechart.js"></script>
-<script src="js/easypiechart-data.js"></script>
-<script src="js/bootstrap-datepicker.js"></script>
-<script src="js/bootstrap-table.js"></script>
-<link rel="stylesheet" href="css/bootstrap-table.css">
-<script>
-	$('#calendar').datepicker({});
+		<script src="js/jquery-1.11.1.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script src="js/chart.min.js"></script>
+		<script src="js/chart-data.js"></script>
+		<script src="js/easypiechart.js"></script>
+		<script src="js/easypiechart-data.js"></script>
+		<script src="js/bootstrap-datepicker.js"></script>
+		<script src="js/bootstrap-table.js"></script>
+		<link rel="stylesheet" href="css/bootstrap-table.css">
+		<script>
+			$('#calendar').datepicker({});
 
 !function ($) {
 $(document).on("click", "ul.nav li.parent > a > span.icon", function () {
@@ -172,21 +213,16 @@ $(window).on('resize', function () {
 if ($(window).width() > 768) 
 $('#sidebar-collapse').collapse('show')
 
-
-
-
-
 })
 $(window).on('resize', function () {
 if ($(window).width() <= 767) 
 $('#sidebar-collapse').collapse('hide')
 
-
-
-
-
 })
-</script>
+		</script>
 
 
-<div id="torrent-scanner-popup" style="display: none;"></div></body>{% endblock %}
+		<div id="torrent-scanner-popup" style="display: none;"></div>
+	</body>
+{% endblock %}
+
