@@ -12,6 +12,11 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class CategoryController extends AbstractController
 {
+    private $categoryRepository;
+    public function __construct(CategoryRepository $categoryRepository)
+    {
+        $this->categoryRepository = $categoryRepository;
+    }
     #[Route('admin/category', name: 'app_category_index', methods: ['GET'])]
     public function index(CategoryRepository $categoryRepository): Response
     {
@@ -39,21 +44,22 @@ class CategoryController extends AbstractController
         ]);
     }
 
-    // #[Route('/{id}', name: 'app_category_show', methods: ['GET'])]
-    // public function show(Category $category): Response
-    // {
-    //     return $this->render('category/show.html.twig', [
-    //         'category' => $category,
-    //     ]);
-    // }
-
-    #[Route('admin/{id}', name: 'app_category_detail', methods: ['GET'])]
-    public function detail(Category $category): Response
+    #[Route('/{id}', name: 'app_category_show', methods: ['GET'])]
+    public function show(Category $category): Response
     {
-        return $this->render('Admin_interface\category_panel\show.html.twig', [
+        return $this->render('category/show.html.twig', [
             'category' => $category,
         ]);
     }
+
+    #[Route('admin/category/{id}/edit', name: 'app_category_detail', methods: ['GET', 'POST'])]
+    public function detail($id): Response
+    {
+        return $this->render('Admin_interface\category_panel\show.html.twig', [
+            'category' => $this->categoryRepository->find($id),
+        ]);
+    }
+
     #[Route('category/{id}/delete', name: 'app_category_delete', methods: ['GET', 'POST'])]
     public function delete(Request $request, Category $category, CategoryRepository $categoryRepository): Response
     {

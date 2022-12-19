@@ -115,8 +115,6 @@ class Product
     }
 
 
-
-
     public function getGift(): ?string
     {
         return $this->gift;
