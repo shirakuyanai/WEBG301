@@ -100,6 +100,8 @@ class Product
         return $this;
     }
 
+    
+
     public function getImage(): ?string
     {
         return $this->image;
