@@ -36,6 +36,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $phone = null;
 
+    #[ORM\Column]
+    private array $roles = [];
+
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $address_1 = null;
 
@@ -48,11 +51,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $address_4 = null;
 
-    #[ORM\Column]
-    private array $roles = [];
-
     #[ORM\Column(nullable: true)]
-    private ?int $gender = null;
+    private ?int $zipcode = null;
 
     public function getId(): ?int
     {
@@ -153,12 +153,48 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+     /**
+     * @see UserInterface
+     */
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return (string)$this->getId();
+    }
+
+    public function getZipcode(): ?int
+    {
+        return $this->zipcode;
+    }
+
+    public function setZipcode(int $zipcode): self
+    {
+        $this->zipcode = $zipcode;
+
+        return $this;
+    }
+
     public function getAddress1(): ?string
     {
         return $this->address_1;
     }
 
-    public function setAddress1(?string $address_1): self
+    public function setAddress1(string $address_1): self
     {
         $this->address_1 = $address_1;
 
@@ -182,7 +218,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->address_3;
     }
 
-    public function setAddress3(string $address_3): self
+    public function setAddress3(?string $address_3): self
     {
         $this->address_3 = $address_3;
 
@@ -194,46 +230,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->address_4;
     }
 
-    public function setAddress4(string $address_4): self
+    public function setAddress4(?string $address_4): self
     {
         $this->address_4 = $address_4;
 
         return $this;
-    }
-
-     /**
-     * @see UserInterface
-     */
-    public function getRoles(): array
-    {
-        $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
-
-        return array_unique($roles);
-    }
-
-    public function setRoles(array $roles): self
-    {
-        $this->roles = $roles;
-
-        return $this;
-    }
-
-    public function getGender(): ?int
-    {
-        return $this->gender;
-    }
-
-    public function setGender(int $gender): self
-    {
-        $this->gender = $gender;
-
-        return $this;
-    }
-
-    public function __toString()
-    {
-        return (string)$this->getId();
     }
 }

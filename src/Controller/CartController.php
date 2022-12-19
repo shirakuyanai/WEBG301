@@ -98,8 +98,7 @@ class CartController extends AbstractController
         // $manager->persist($product);
         $manager->flush();
 
-        return new Response("Item added to cart successfully!", Response::HTTP_CREATED, // 201
-        ['content-type' => 'text/html']);
+        return $this->redirectToRoute('app_cart_index');
     }
 
     #[Route('/{id}/edit', name: 'app_cart_edit', methods: ['GET', 'POST'])]

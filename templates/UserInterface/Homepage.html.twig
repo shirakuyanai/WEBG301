@@ -1,0 +1,50 @@
+{% extends '/BaseTemplates/UserBase.html.twig' %}
+
+
+{% block body %}
+	{% include "UserInterface/NavBar.html.twig" %}
+	<div class="container">
+		<!-- Header -->
+						{# <div id="header">
+							<div
+								class="row" style="margin: 5px">
+								<!-- search -->
+								<div id="search" class="col-md-4 col-sm-12 col-xs-12 m-5">
+									<form method="post" name="sform" action="#">
+										<input style="margin-right:5px" type="image" src="{{ asset('images/s1.png') }}" width="25" height="25">
+										<input onfocus="searchFocus();" onblur="searchBlur();" type="text" name="stext" value="Search...">
+									</form>
+								</div>
+								<!-- end search -->
+							</div>
+						</div> #}
+						<!-- End Header -->
+
+		<!-- Banner  -->
+		{% include "/UserInterface/Banner.html.twig" %}
+		<!-- End Banner -->
+		<!-- Body -->
+		<div id="body">
+			<div class="row">
+				<div class="col-md-3 col-sm-12 col-xs-12">
+					{% include "UserInterface/SideBar.html.twig" %}
+				</div>
+				<div class="col-md-9 col-sm-12 col-xs-12">
+					{% include "UserInterface/Carousel.html.twig" %}
+				</div>
+			</div>
+			<div id="main">
+				<div class="products">
+					{% include "UserInterface/Index/Bestseller.html.twig" %}
+					<hr>
+					{% include "UserInterface/Index/NewProducts.html.twig" %}
+				</div>
+			</div>
+		</div>
+		<!-- End Body -->
+		
+		<!-- Footer -->
+		{% include "UserInterface/Footer.html.twig" %}
+		<!-- End Footer -->
+	</div>
+</body>{% endblock %}

@@ -3,7 +3,9 @@
 namespace App\Form;
 
 use App\Entity\OrderItems;
+use phpDocumentor\Reflection\Types\Integer;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -13,8 +15,6 @@ class OrderItemsType extends AbstractType
     {
         $builder
             ->add('quantity')
-            ->add('created_at')
-            ->add('updated_at')
             ->add('order_id')
             ->add('product_id')
         ;
