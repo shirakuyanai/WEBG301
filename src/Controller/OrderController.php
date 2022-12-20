@@ -164,4 +164,20 @@ class OrderController extends AbstractController
             'products' => $this->productRepository->findAll(),
         ]);
     }
+
+    #[Route('/myorders', name: 'app_order_list')]
+    public function orderList(): Response
+    {
+        $user = $this->getUser();
+        if (!$user)
+        {
+            return new Response('An error has occurred, please refresh try again later.', 201, [
+                'content-type' => 'text/html'
+            ]);
+        }
+        return $this->render('order/orderlist.html.twig', [
+            'order_details' => $this->orderDetailsRepository->findByUser($user),
+            'order_items' => $this->OrderItemsRepository->findAll(),
+        ]);
+    }
 }

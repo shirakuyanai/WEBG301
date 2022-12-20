@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use App\Entity\Category;
 use App\Form\CategoryType;
 use App\Repository\CategoryRepository;
@@ -44,13 +46,14 @@ class CategoryController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_category_show', methods: ['GET'])]
-    public function show(Category $category): Response
-    {
-        return $this->render('category/show.html.twig', [
-            'category' => $category,
-        ]);
-    }
+    // #[Route('/{id}', name: 'app_category_show', methods: ['GET'])]
+    // public function show($id): Response
+    // {
+    //     $category = $this->categoryRepository->find($id);
+    //     return $this->render('category/show.html.twig', [
+    //         'category' => $category,
+    //     ]);
+    // }
 
     #[Route('admin/category/{id}/edit', name: 'app_category_detail', methods: ['GET', 'POST'])]
     public function detail($id): Response
@@ -68,7 +71,7 @@ class CategoryController extends AbstractController
         return $this->redirectToRoute('app_category_index', [], Response::HTTP_SEE_OTHER);
     }
 
-    #[Route('category/{id}/edit', name: 'app_category_edit', methods: ['GET', 'POST'])]
+    #[Route('admin/category/{id}/edit', name: 'app_category_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Category $category, CategoryRepository $categoryRepository): Response
     {
         $form = $this->createForm(CategoryType::class, $category);

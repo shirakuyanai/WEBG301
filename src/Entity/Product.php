@@ -27,11 +27,8 @@ class Product
     #[ORM\JoinColumn(nullable: false)]
     private ?Category $category = null;
 
-    #[ORM\Column(type: Types::TEXT)]
-    private ?string $image = null;
-
-   
-    
+    #[ORM\Column(type: 'string', length: 255)]
+    private $image;    
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $gift = null;
@@ -102,15 +99,16 @@ class Product
 
     
 
-    public function getImage(): ?string
+    public function getImage()
     {
         return $this->image;
     }
 
-    public function setImage(string $image): self
+    public function setImage($image): self
     {
-        $this->image = $image;
-
+        if ($image != null) {
+            $this->image = $image;
+        }
         return $this;
     }
 

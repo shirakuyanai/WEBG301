@@ -9,9 +9,13 @@ use App\Repository\CartRepository;
 use App\Repository\ProductRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+
+use function PHPUnit\Framework\throwException;
+
 // #[Route('/admin')]
 class ProductsPanelController extends AbstractController
 {
@@ -65,8 +69,21 @@ class ProductsPanelController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+        $img = $product->getImage();
+        $imgName = uniqid();
+        $imgExtension = $img->guessExtension();
+        $imageName = $imgName . "." . $imgExtension;
+        try {
+            $img->move(
+               $this->getParameter('product_image'),
+               $imageName
+            );
+        } catch (FileException $e) {
+            throwException($e);
+        }
+        $product->setImage($imageName);
+            
             $productRepository->save($product, true);
-
             return $this->redirectToRoute('app_admin_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -102,5 +119,4 @@ class ProductsPanelController extends AbstractController
             'form' => $form,
         ]);
     }
-
 }
