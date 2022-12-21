@@ -1,0 +1,20 @@
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
+{{ form_start(form) }}
+    {{ form_label(form.name) }}
+    {{ form_widget(form.name) }}
+    {{ form_label(form.price) }}
+    {{ form_widget(form.price) }}
+    {{ form_label(form.stock) }}
+    {{ form_widget(form.stock) }}
+    {{ form_label(form.category) }}
+    {{ form_widget(form.category) }}
+    {{ form_label(form.warranty) }}
+    {{ form_widget(form.warranty) }}
+    {{ form_label(form.gift) }}
+    {{ form_widget(form.gift) }}
+    {{ form_label(form.model) }}
+    {{ form_widget(form.model) }}
+    {{ form_label(form.image) }}
+    {{ form_widget(form.image) }}
+<button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}

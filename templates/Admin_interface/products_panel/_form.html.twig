@@ -1,6 +1,36 @@
 {% form_theme form 'bootstrap_5_layout.html.twig' %}
 {{ form_start(form) }}
-{{ form_label(form) }}
-{{ form_widget(form) }}
-<button class="btn">{{ button_label|default('Save') }}</button>
+    <div class="mb-3">
+    {{ form_label(form.name) }}
+    {{ form_widget(form.name) }}
+    </div>
+    <div class="mb-3">
+    {{ form_label(form.price) }}
+    {{ form_widget(form.price) }}
+    </div>
+    <div class="mb-3">
+    {{ form_label(form.stock) }}
+    {{ form_widget(form.stock) }}
+    </div>
+    <div class="mb-3">
+    <div>{{ form_label(form.category) }}</div>
+    <div>{{ form_widget(form.category) }}</div>
+    </div>
+    <div class="mb-3">
+    {{ form_label(form.warranty) }}
+    {{ form_widget(form.warranty) }}
+    </div>
+    <div class="mb-3">
+    {{ form_label(form.gift) }}
+    {{ form_widget(form.gift) }}
+    </div>
+    <div class="mb-3">
+    {{ form_label(form.model) }}
+    {{ form_widget(form.model) }}
+    </div>
+    <div class="mb-3">
+    {{ form_label(form.image) }}
+    {{ form_widget(form.image) }}
+    </div>
+<button class="btn bg-primary">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
