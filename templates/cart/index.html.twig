@@ -136,7 +136,7 @@
 										{% endif %}
 									{% endfor %}
 
-									<a href="{{ path('app_product_show', {'id': product_id}) }}"><img src="/{{product_image}}" class="border" style="max-width:100px"></a>
+									<a href="{{ path('app_product_show', {'id': product_id}) }}"><img src="{{ asset('/images/Product/'~product_image) }}" class="border" style="max-width:100px"></a>
 									<br>
 									{{product_name}}
 									<button

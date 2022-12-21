@@ -39,6 +39,9 @@ class Product
     #[ORM\Column(length: 255)]
     private ?string $warranty = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $brand = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -145,6 +148,18 @@ class Product
     public function setWarranty(string $warranty): self
     {
         $this->warranty = $warranty;
+
+        return $this;
+    }
+
+    public function getBrand(): ?string
+    {
+        return $this->brand;
+    }
+
+    public function setBrand(string $brand): self
+    {
+        $this->brand = $brand;
 
         return $this;
     }

@@ -17,16 +17,19 @@
 					<div>
 						<div id="product">
 						<div id="prd-thumb" class="col-md-6 col-sm-12 col-xs-12 text-center">
-							<img width="360px" src="/{{ product.image}}">
+							<img width="360px" src="{{ asset('/images/Product/'~product.image) }}">
 						</div>
 						<div id="prd-intro" class="col-md-6 col-sm-12 col-xs-12">
 							<h3>{{ product.name }}
 							</h3>
 							<p>
+								<h5><span class="sl">Brand: {{product.brand}}</span></h5>
+							</p>
+							<p>
 								<span class="sl">Model: {{product.model}}</span>
 							</p>
 							<p id="prd-price">
-								<span class="sl">Price: {{ product.price|format_currency("VND") }}$</span>
+								<span class="sl">Price: {{ product.price|format_currency("VND") }}</span>
 							</p>
 							<p>
 								<span class="sl">Warranty: {{ product.Warranty}}</span>

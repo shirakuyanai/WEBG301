@@ -1,13 +1,21 @@
 <h2 class="h2-bar">Bestseller</h2>
 <div class="row">
-	<div class="col-md-3 col-sm-6 product-item text-center">
-		<a href="#"><img width="80" height="144" src="https://scontent.fhan17-1.fna.fbcdn.net/v/t1.6435-9/180978949_314228950059549_1005358403722529104_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=_F6kXpxNUVkAX9BcGJB&_nc_ht=scontent.fhan17-1.fna&oh=00_AfBgIYJxDRd8PYaBWLPKNA9-RgeHnMLL12pa-o3vepI1Xw&oe=63C3C30E"></a>
-		<h3>
-			<a href="#">iphone 14 pro max</a>
-		</h3>
-		<p>12 month warranty</p>
-		<p>New 100%</p>
-		<p class="price">5000$</p>
-	</div>
-</div>
+	{% for product in products %}
+		{% if product.stock < 20 %}
+			<div class="col-md-3 col-sm-6 product-item text-center">
+				<a href="{{ path('app_product_show', {'id': product.id}) }}"><img width="180" height="180" src="{{ asset('/images/Product/'~product.image) }}"></a>
+				<h3>
+					<a href="{{ path('app_product_show', {'id': product.id}) }}">{{ product.name }}</a>
 
+				</h3>
+				<p>Warranty:
+					{{ product.Warranty}}</p>
+				<p>Brand:
+					{{ product.brand }}</p>
+				<p class="price">Price:
+					{{ product.price|format_currency("VND") }}
+				</p>
+			</div>
+		{% endif %}
+	{% endfor %}
+</div>

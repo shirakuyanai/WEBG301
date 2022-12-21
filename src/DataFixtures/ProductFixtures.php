@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\User;
 use App\Entity\Product;
 use App\Entity\Category;
 use Doctrine\Persistence\ObjectManager;
@@ -36,7 +37,7 @@ class ProductFixtures extends Fixture
             'Samsung Odyssey 4K',
             'SamSung Odyssey Neo',
             'Gigabyte 56"',
-            'Cooler master 34"',
+            'Coolermaster 34"',
             'Cosair Hustman Elite',
             'Steelseries Mamba Ilite',
             'Logitech G502 X',
@@ -53,47 +54,57 @@ class ProductFixtures extends Fixture
             'Backpack',
             'ROG Wifi Rounter'
         ];
+
+        $brand = ['Dell', 'HP', 'MSI', 'Acer', 'Asus ROG',
+                'TBK and Asus', 'TBK and Razer', 'TBK and Samsung', 'TBK and MSI', 'TBK and Predator',
+                'Intel', 'AMD', 'Intel and Nvidia', 'Intel', 'Intel',
+                'Asus ROG', 'Asus ROG', 'Intel', 'Asus ROG', 'Gigabyte Aorus',
+                'Asus ROG', 'Samsung Odyssey', 'Samsung Odyssey', 'Gigabyte', 'Coolermaster',
+                'Cosair', 'Steelseries', 'Logitech', 'Razer', 'Ducky',
+                'Logitech', 'HyperX', 'Asus ROG', 'Razer', 'Vander & Thorn',
+                'Viettel', 'Aukey', 'Anker', 'Anh Tuyet jewelry store', 'Asus ROG'];
+
         $image = [
-            'images/gaming_laptop/Dell G15.png',
-            'images/gaming_laptop/HP omen 15.png',
-            'images/gaming_laptop/MSI katana.png',
-            'images/gaming_laptop/Predator H300.png',
-            'images/gaming_laptop/ROG Z17.png',
-            'images/gaming_PC/PC gaming1.png',
-            'images/gaming_PC/PC gaming2.png',
-            'images/gaming_PC/PC gaming3.png',
-            'images/gaming_PC/PC gaming4.png',
-            'images/gaming_PC/PC gaming5.png',
-            'images/office_PC/PC_VP1.png',
-            'images/office_PC/PC_VP2.png',
-            'images/office_PC/PC_VP3.png',
-            'images/office_PC/PC_VP4.png',
-            'images/office_PC/PC_VP5.png',
-            'images/pc_component/Component1.png',
-            'images/pc_component/Component2.png',
-            'images/pc_component/Component3.png',
-            'images/pc_component/Component4.png',
-            'images/pc_component/Component5.png',
-            'images/screen/Screen1.png',
-            'images/screen/Screen2.png',
-            'images/screen/Screen3.png',
-            'images/screen/Screen4.png',
-            'images/screen/Screen5.png',
-            'images/gears/gear1.png',
-            'images/gears/gear2.png',
-            'images/gears/gear3.png',
-            'images/gears/gear4.png',
-            'images/gears/gear5.png',
-            'images/music_sound/sound1.png',
-            'images/music_sound/sound2.png',
-            'images/music_sound/sound3.png',
-            'images/music_sound/sound4.png',
-            'images/music_sound/sound5.png',
-            'images/accessory/accessory1.png',
-            'images/accessory/accessory2.png',
-            'images/accessory/accessory3.png',
-            'images/accessory/accessory4.png',
-            'images/accessory/accessory5.png'
+            'ltgm1.png',
+            'ltgm2.png',
+            'ltgm3.png',
+            'ltgm4.png',
+            'ltgm5.png',
+            'PC gaming1.png',
+            'PC gaming2.png',
+            'PC gaming3.png',
+            'PC gaming4.png',
+            'PC gaming5.png',
+            'PC_VP1.png',
+            'PC_VP2.png',
+            'PC_VP3.png',
+            'PC_VP4.png',
+            'PC_VP5.png',
+            'Component1.png',
+            'Component2.png',
+            'Component3.png',
+            'Component4.png',
+            'Component5.png',
+            'Screen1.png',
+            'Screen2.png',
+            'Screen3.png',
+            'Screen4.png',
+            'Screen5.png',
+            'gear1.png',
+            'gear2.png',
+            'gear3.png',
+            'gear4.png',
+            'gear5.png',
+            'sound1.png',
+            'sound2.png',
+            'sound3.png',
+            'sound4.png',
+            'sound5.png',
+            'accessory1.png',
+            'accessory2.png',
+            'accessory3.png',
+            'accessory4.png',
+            'accessory5.png'
         ];
 
         $warranty = ['1 years', '2 years', '3 years', '4 years'];
@@ -147,7 +158,15 @@ class ProductFixtures extends Fixture
 
         $title = ['Gaming Laptop', 'Gaming PC', 'Office PC', 'Computer Component', 'Display Monitor', 'Gears', 'Music and Sound', 'Accessory'];
 
+        // //Add admin account
+        // $user = new User();
+        // $user -> setUsername('admin1')
+        //     ->setPassword('$2y$13$2L566yxvPgNs5yOS5bMR9OCvdT6FSRGvajbzPxjn0Phn19pNuIlQm')
+        //     ->setEmail('kyanhcube@uwu.com');
+        // $user->setRoles($user->getRoles() + 'ROLE_ADMIN');
+        // //-------------------------
 
+        // Add category
         for ($i = 0; $i <= 7; $i++) {
             $category = new Category;
             $category->setTitle($title[$i]);
@@ -168,7 +187,8 @@ class ProductFixtures extends Fixture
                 ->setImage($image[$i])
                 ->setWarranty($warranty[$random_warranty])
                 ->setGift($gift[$random_gift])
-                ->setModel($model[$i]);
+                ->setModel($model[$i])
+                ->setBrand($brand[$i]);
 
             $manager->persist($product);
         }
@@ -187,7 +207,8 @@ class ProductFixtures extends Fixture
                 ->setImage($image[$i])
                 ->setWarranty($warranty[$random_warranty])
                 ->setGift($gift[$random_gift])
-                ->setModel($model[$i]);
+                ->setModel($model[$i])
+                ->setBrand($brand[$i]);
 
             $manager->persist($product);
         }
@@ -206,7 +227,8 @@ class ProductFixtures extends Fixture
                 ->setImage($image[$i])
                 ->setWarranty($warranty[$random_warranty])
                 ->setGift($gift[$random_gift])
-                ->setModel($model[$i]);
+                ->setModel($model[$i])
+                ->setBrand($brand[$i]);
 
             $manager->persist($product);
         }
@@ -225,7 +247,8 @@ class ProductFixtures extends Fixture
                 ->setImage($image[$i])
                 ->setWarranty($warranty[$random_warranty])
                 ->setGift($gift[$random_gift])
-                ->setModel($model[$i]);
+                ->setModel($model[$i])
+                ->setBrand($brand[$i]);
             $manager->persist($product);
         }
 
@@ -242,7 +265,8 @@ class ProductFixtures extends Fixture
                 ->setImage($image[$i])
                 ->setWarranty($warranty[$random_warranty])
                 ->setGift($gift[$random_gift])
-                ->setModel($model[$i]);
+                ->setModel($model[$i])
+                ->setBrand($brand[$i]);
             $manager->persist($product);
         }
 
@@ -259,7 +283,8 @@ class ProductFixtures extends Fixture
                 ->setImage($image[$i])
                 ->setWarranty($warranty[$random_warranty])
                 ->setGift($gift[$random_gift])
-                ->setModel($model[$i]);
+                ->setModel($model[$i])
+                ->setBrand($brand[$i]);
             $manager->persist($product);
         }
 
@@ -276,7 +301,8 @@ class ProductFixtures extends Fixture
                 ->setImage($image[$i])
                 ->setWarranty($warranty[$random_warranty])
                 ->setGift($gift[$random_gift])
-                ->setModel($model[$i]);
+                ->setModel($model[$i])
+                ->setBrand($brand[$i]);
             $manager->persist($product);
         }
 
@@ -293,7 +319,8 @@ class ProductFixtures extends Fixture
                 ->setImage($image[$i])
                 ->setWarranty($warranty[$random_warranty])
                 ->setGift($gift[$random_gift])
-                ->setModel($model[$i]);
+                ->setModel($model[$i])
+                ->setBrand($brand[$i]);
             $manager->persist($product);
         }
 
