@@ -3,13 +3,13 @@
 
 {% block body %}
 	{% include "UserInterface/NavBar.html.twig" %}
-	<div class="container">
+	<div
+		class="container">
 		<!-- Banner  -->
 		{% include "/UserInterface/Banner.html.twig" %}
 		<!-- End Banner -->
 		<!-- Body -->
-		<div id="body">
-			<div class="row">
+			<div id="body"> <div class="row">
 				<div class="col-md-3 col-sm-12 col-xs-12">
 					{% include "UserInterface/SideBar.html.twig" %}
 				</div>
@@ -21,13 +21,28 @@
 				<div class="products">
 					{% include "UserInterface/Index/Bestseller.html.twig" %}
 					<hr>
+					<div class="row border">
+						<a href="https://www.netflix.com/">
+							<img src="/images/ad1.png" width="1000" height="125" style="margin-left: 80px">
+						</a>
+					</div>
+					<hr>
 					<h2 class="h2-bar">Newest product</h2>
 					{% include "UserInterface/Index/Products.html.twig" %}
+					<hr>
+					<div>
+						<div class="row border">
+							<a href="https://f88.vn/">
+								<img src="/images/ad2.png" width="1000" height="125" style="margin-left: 80px">
+							</a>
+						</div>
+					</div>
+					<hr>
 				</div>
 			</div>
 		</div>
 		<!-- End Body -->
-		
+
 		<!-- Footer -->
 		{% include "UserInterface/Footer.html.twig" %}
 		<!-- End Footer -->

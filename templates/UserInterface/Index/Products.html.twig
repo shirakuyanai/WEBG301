@@ -1,13 +1,13 @@
 <div class="row">
 	{% for product in products %}
 		<div class="col-md-3 col-sm-6 product-item text-center">
-			<a href="{{ path('app_product_show', {'id': product.id}) }}"><img width="80" height="144" src="/{{ product.image }}"></a>
+			<a href="{{ path('app_product_show', {'id': product.id}) }}"><img width="180" height="180" src="/{{ product.image }}"></a>
 			<h3>
 				<a href="{{ path('app_product_show', {'id': product.id}) }}">{{ product.name }}</a>
 
 			</h3>
-			<p>Warranty: 12 month warranty</p>
-			<p>Status: New 100%</p>
+			<p>Warranty: {{ product.Warranty}}</p>
+			<p>Purchasing gift: {{ product.gift }}</p>
 			<p class="price">Price: {{ product.price }}$</p>
 		</div>
 	{% endfor %}

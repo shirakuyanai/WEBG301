@@ -6,16 +6,13 @@ use App\Entity\Product;
 
 use App\Form\ProductType;
 use App\Repository\CartRepository;
-use App\Repository\ProductRepository;
 use App\Repository\UserRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use App\Repository\ProductRepository;
+use App\Repository\CategoryRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
-use function PHPUnit\Framework\throwException;
-
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 // #[Route('/admin')]
 class ProductsPanelController extends AbstractController
 {
@@ -23,15 +20,15 @@ class ProductsPanelController extends AbstractController
     private $productRepository;
     
     private $cartRepository;
+    private $categoryRepository;
 
 
-
-    public function __construct(UserRepository $userRepository, ProductRepository $productRepository, CartRepository $cartRepository)
+    public function __construct(UserRepository $userRepository, ProductRepository $productRepository, CartRepository $cartRepository, CategoryRepository $categoryRepository)
     {
         $this->cartRepository = $cartRepository;
         $this->userRepository = $userRepository;
         $this->productRepository = $productRepository;
-        
+        $this->categoryRepository = $categoryRepository;
     }
     #[Route('admin/product', name: 'app_products_panel')]
     public function index(): Response
@@ -46,6 +43,8 @@ class ProductsPanelController extends AbstractController
     {
         return $this->render('product/show.html.twig', [
             'product' => $product,
+            'categories' =>$this->categoryRepository->findAll(),
+            'products' => $this->productRepository->findAll(),
         ]);
     }
 
@@ -69,21 +68,8 @@ class ProductsPanelController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-        $img = $product->getImage();
-        $imgName = uniqid();
-        $imgExtension = $img->guessExtension();
-        $imageName = $imgName . "." . $imgExtension;
-        try {
-            $img->move(
-               $this->getParameter('product_image'),
-               $imageName
-            );
-        } catch (FileException $e) {
-            throwException($e);
-        }
-        $product->setImage($imageName);
-            
             $productRepository->save($product, true);
+
             return $this->redirectToRoute('app_admin_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -119,4 +105,5 @@ class ProductsPanelController extends AbstractController
             'form' => $form,
         ]);
     }
+
 }
