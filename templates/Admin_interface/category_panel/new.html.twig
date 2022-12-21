@@ -1,11 +1,16 @@
-<!DOCTYPE html>
+{% extends '/Admin_interface/base.html.twig' %}
 
-<title>New Category</title>
-
+{% block header1 %}New Product
+{% endblock %}
+{% block header2 %}Products
+{% endblock %}
 {% block body %}
-    <h1>Create new Category</h1>
+	<a href="{{ path('app_products_panel') }}" class="text-white">Go back</a>
+	<div class="container">
+		<h1>Create new Product</h1>
 
-    {{ include('category/_form.html.twig') }}
+		{{ include('/Admin_interface/products_panel/_form.html.twig') }}
+	</div>
 
-    <a href="{{ path('app_category_index') }}">back to list</a>
+
 {% endblock %}

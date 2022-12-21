@@ -26,7 +26,7 @@
 								<span class="sl">Model: {{product.model}}</span>
 							</p>
 							<p id="prd-price">
-								<span class="sl">Price: {{ product.price }}$</span>
+								<span class="sl">Price: {{ product.price|format_currency("VND") }}$</span>
 							</p>
 							<p>
 								<span class="sl">Warranty: {{ product.Warranty}}</span>

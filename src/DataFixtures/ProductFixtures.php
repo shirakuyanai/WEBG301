@@ -163,7 +163,7 @@ class ProductFixtures extends Fixture
 
             $product->setCategory($category)
                 ->setName($name[$i])
-                ->setPrice(rand(1000, 5000))
+                ->setPrice(rand(20000000, 50000000))
                 ->setStock(rand(0, 100))
                 ->setImage($image[$i])
                 ->setWarranty($warranty[$random_warranty])
@@ -182,7 +182,7 @@ class ProductFixtures extends Fixture
 
             $product->setCategory($category)
                 ->setName($name[$i])
-                ->setPrice(rand(1000, 6000))
+                ->setPrice(rand(25000000, 80000000))
                 ->setStock(rand(0, 100))
                 ->setImage($image[$i])
                 ->setWarranty($warranty[$random_warranty])
@@ -201,7 +201,7 @@ class ProductFixtures extends Fixture
 
             $product->setCategory($category)
                 ->setName($name[$i])
-                ->setPrice(rand(200, 1000))
+                ->setPrice(rand(4000000, 13000000))
                 ->setStock(rand(0, 100))
                 ->setImage($image[$i])
                 ->setWarranty($warranty[$random_warranty])
@@ -220,7 +220,7 @@ class ProductFixtures extends Fixture
 
             $product->setCategory($category)
                 ->setName($name[$i])
-                ->setPrice(rand(500, 5000))
+                ->setPrice(rand(10000000, 20000000))
                 ->setStock(rand(0, 100))
                 ->setImage($image[$i])
                 ->setWarranty($warranty[$random_warranty])
@@ -237,7 +237,7 @@ class ProductFixtures extends Fixture
 
             $product->setCategory($category)
                 ->setName($name[$i])
-                ->setPrice(rand(1000, 5000))
+                ->setPrice(rand(10000000, 100000000))
                 ->setStock(rand(0, 100))
                 ->setImage($image[$i])
                 ->setWarranty($warranty[$random_warranty])
@@ -254,7 +254,7 @@ class ProductFixtures extends Fixture
 
             $product->setCategory($category)
                 ->setName($name[$i])
-                ->setPrice(rand(70, 400))
+                ->setPrice(rand(1000000, 9000000))
                 ->setStock(rand(0, 100))
                 ->setImage($image[$i])
                 ->setWarranty($warranty[$random_warranty])
@@ -271,7 +271,7 @@ class ProductFixtures extends Fixture
 
             $product->setCategory($category)
                 ->setName($name[$i])
-                ->setPrice(rand(70, 500))
+                ->setPrice(rand(4000000, 10000000))
                 ->setStock(rand(0, 100))
                 ->setImage($image[$i])
                 ->setWarranty($warranty[$random_warranty])
@@ -288,7 +288,7 @@ class ProductFixtures extends Fixture
 
             $product->setCategory($category)
                 ->setName($name[$i])
-                ->setPrice(rand(10, 400))
+                ->setPrice(rand(100000, 1000000))
                 ->setStock(rand(0, 100))
                 ->setImage($image[$i])
                 ->setWarranty($warranty[$random_warranty])

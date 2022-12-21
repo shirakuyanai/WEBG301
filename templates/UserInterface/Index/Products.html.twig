@@ -8,7 +8,7 @@
 			</h3>
 			<p>Warranty: {{ product.Warranty}}</p>
 			<p>Purchasing gift: {{ product.gift }}</p>
-			<p class="price">Price: {{ product.price }}$</p>
+			<p class="price">Price: {{ product.price|format_currency("VND") }} </p>
 		</div>
 	{% endfor %}
 </div>
