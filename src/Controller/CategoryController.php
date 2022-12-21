@@ -55,13 +55,6 @@ class CategoryController extends AbstractController
     //     ]);
     // }
 
-    #[Route('admin/category/{id}/edit', name: 'app_category_detail', methods: ['GET', 'POST'])]
-    public function detail($id): Response
-    {
-        return $this->render('Admin_interface\category_panel\show.html.twig', [
-            'category' => $this->categoryRepository->find($id),
-        ]);
-    }
 
     #[Route('category/{id}/delete', name: 'app_category_delete', methods: ['GET', 'POST'])]
     public function delete(Request $request, Category $category, CategoryRepository $categoryRepository): Response
@@ -88,6 +81,4 @@ class CategoryController extends AbstractController
             'form' => $form,
         ]);
     }
-
-  
 }

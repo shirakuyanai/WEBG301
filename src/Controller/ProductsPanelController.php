@@ -42,15 +42,11 @@ class ProductsPanelController extends AbstractController
     #[Route('/product/{id}', name: 'app_product_show', methods: ['GET'])]
     public function show(Product $product): Response
     {
-        if ($this->getUser())
-        {
-            $user = $this->getUser();
-        }
         return $this->render('product/show.html.twig', [
             'product' => $product,
             'categories' =>$this->categoryRepository->findAll(),
             'products' => $this->productRepository->findAll(),
-            'carts' =>$this->cartsRepository->findByUser($user),
+            'carts' =>$this->cartRepository->findAll(),
         ]);
     }
 

@@ -11,8 +11,6 @@ class CategoryPanelController extends AbstractController
     #[Route('/admin/category', name: 'app_category_panel')]
     public function index(): Response
     {
-        return $this->render('Admin_interface/category_panel/index.html.twig', [
-            'controller_name' => 'CategoryPanelController',
-        ]);
+        return $this->render('Admin_interface/category_panel/index.html.twig');
     }
 }
