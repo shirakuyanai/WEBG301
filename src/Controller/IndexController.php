@@ -20,10 +20,16 @@ class IndexController extends AbstractController
                         CartRepository $cartRepository, 
                         CategoryRepository $categoryRepository): Response
     {
+        $user = $this->getUser();
+        if (!$user)
+        {
+            $cart_count = 0;
+        }
+        $cart_count = count($cartRepository->findByUser($user));
         return $this->render('/UserInterface/Homepage.html.twig', [ 
             'controller_name' => 'Landing Page',
             'products' => $productRepository->findAll(),
-            'carts' => $cartRepository->findAll(),
+            'cart_count' => $cart_count,
             'categories' => $categoryRepository->findAll(),
         ]);
     }

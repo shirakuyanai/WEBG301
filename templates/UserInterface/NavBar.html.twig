@@ -39,12 +39,7 @@
         {% if app.user %}
         <li>
           <a href="{{ path('app_cart_index') }}"><i class="fas fa-shopping-cart"></i>
-            {% set cart_count = 0 %}
-            {% for cart in carts %}
-              {% if cart.user == app.user %}
-                {% set cart_count = cart_count + cart.quantity  %}
-              {% endif %}
-            {% endfor %}
+
             {{ cart_count }}
           </a>
         </li>

@@ -6,32 +6,33 @@ use App\Entity\Product;
 
 use App\Form\ProductType;
 use App\Repository\CartRepository;
-use App\Repository\ProductRepository;
 use App\Repository\UserRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use App\Repository\ProductRepository;
+use App\Repository\CategoryRepository;
 use Symfony\Component\HttpFoundation\Request;
+use function PHPUnit\Framework\throwException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-use function PHPUnit\Framework\throwException;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 // #[Route('/admin')]
 class ProductsPanelController extends AbstractController
 {
     private $userRepository;
     private $productRepository;
-    
     private $cartRepository;
+    private $categoryRepository;
 
 
-
-    public function __construct(UserRepository $userRepository, ProductRepository $productRepository, CartRepository $cartRepository)
+    public function __construct(UserRepository $userRepository, ProductRepository $productRepository, CartRepository $cartRepository, CategoryRepository $categoryRepository)
     {
         $this->cartRepository = $cartRepository;
         $this->userRepository = $userRepository;
         $this->productRepository = $productRepository;
-        
+        $this->cartRepository = $cartRepository;
+        $this->categoryRepository = $categoryRepository;
     }
     #[Route('admin/product', name: 'app_products_panel')]
     public function index(): Response
@@ -79,8 +80,17 @@ class ProductsPanelController extends AbstractController
     #[Route('/product/{id}', name: 'app_product_show', methods: ['GET'])]
     public function show(Product $product): Response
     {
+        $user = $this->getUser();
+        if (!$user)
+        {
+            $cart_count = 0;
+        }
+        $cart_count = count($this->cartRepository->findByUser($user));
+
         return $this->render('product/show.html.twig', [
             'product' => $product,
+            'cart_count' => $cart_count,
+            'categories' => $this->categoryRepository->findAll(),
         ]);
     }
 
