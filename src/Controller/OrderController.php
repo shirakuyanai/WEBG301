@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\OrderDetails;
 use App\Entity\OrderItems;
-use App\Entity\UserAddress;
 use App\Form\OrderDetailsType;
 use App\Repository\OrderDetailsRepository;
 use App\Repository\OrderItemsRepository;
@@ -13,12 +12,10 @@ use App\Repository\ProductRepository;
 use App\Repository\UserRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/order')]
 class OrderController extends AbstractController
 {
     private $orderDetailsRepository;
@@ -33,7 +30,7 @@ class OrderController extends AbstractController
                                 UserRepository $userRepository,
                                 ManagerRegistry $managerRegistry,
                                 CartRepository $cartRepository,
-                                ProductRepository $productRepository
+                                ProductRepository $productRepository,
                                 )
     {
         $this->orderDetailsRepository = $orderDetailsRepository;
@@ -44,7 +41,7 @@ class OrderController extends AbstractController
         $this->productRepository = $productRepository;
     }
 
-    #[Route('/', name: 'app_order')]
+    #[Route('/order', name: 'app_order')]
     public function index(): Response
     {
         $user = $this->getUser();
@@ -64,7 +61,7 @@ class OrderController extends AbstractController
         ]);
     }
 
-    #[Route('/submit', name: 'app_submit_order', methods: ['GET', 'POST'])]
+    #[Route('/order/submit', name: 'app_submit_order', methods: ['GET', 'POST'])]
     public function submit(Request $request): Response
     {
         $user = $this->getUser();
@@ -124,7 +121,7 @@ class OrderController extends AbstractController
         }
 
         $order_detail->setUser($user);
-        $order_detail->setStatus(0);
+        $order_detail->setStatus(1);
         // 0: Unfinished
         // 1: Finished
         // 2: Cancelled
@@ -164,8 +161,95 @@ class OrderController extends AbstractController
             'products' => $this->productRepository->findAll(),
         ]);
     }
+    #[Route('/admin/order/{id}/change_status/', name: 'app_order_change_status', methods: ['GET', 'POST'])]
+    public function changeStatus(OrderDetails $order_detail, Request $request)
+    {
+        $status = $request->request->get('status');
+        $edit = $request->request->get('edit_product');
+        if ($status != 0 && $status != 1 && $status != 2 && $status != 3 && $status != 4)
+        {
+            return $this->redirectToRoute('app_order_detail', array('id' => $order_detail));
+        }
 
-    #[Route('/myorders', name: 'app_order_list')]
+        $old_status = $order_detail->getStatus();
+        $order_items = $this->OrderItemsRepository->findByOrder($order_detail);
+        $products = $this->productRepository->findAll();
+        if ($old_status == $status)
+        {
+            return $this->redirectToRoute('app_order_detail', array('id' => $order_detail->getId()));
+        }
+
+        if ($status == 3)
+        {
+            foreach ($order_items as $order_item)
+            {
+                foreach ($products as $product)
+                {
+                    if ($order_item->getProduct() == $product)
+                    {
+                        if ($edit == "on")
+                        {
+                            $product->setStock($product->getStock() - $order_item->getQuantity());
+                        }
+                        $manager = $this->managerRegistry->getManager();
+                        $manager->persist($product);
+                        $manager->flush();
+                    }
+                }
+            }
+        }
+        else
+        {
+            if ($old_status == 3)
+            {
+                foreach ($order_items as $order_item)
+                {
+                    foreach ($products as $product)
+                    {
+                        if ($order_item->getProduct() == $product)
+                        {
+                            if ($edit == "on")
+                            {
+                                $product->setStock($product->getStock() + $order_item->getQuantity());
+                            }
+                            $manager = $this->managerRegistry->getManager();
+                            $manager->persist($product);
+                            $manager->flush();
+                        }
+                    }
+                }
+            }
+            if ($old_status == 4)
+            {
+                foreach ($order_items as $order_item)
+                {
+                    foreach ($products as $product)
+                    {
+                        if ($order_item->getProduct() == $product)
+                        {
+                            if ($edit == "on")
+                            {
+                                $product->setStock($product->getStock() - $order_item->getQuantity());
+                            }
+                            $manager = $this->managerRegistry->getManager();
+                            $manager->persist($product);
+                            $manager->flush();
+                        }
+                    }
+                }
+            }
+        }
+
+        $order_detail->setStatus($status);
+        $order_detail->setUpdatedAt(\DateTime::createFromFormat("Y-m-d H:i:s", date("Y-m-d H:i:s")));
+        $manager = $this->managerRegistry->getManager();
+        $manager->persist($order_detail);
+        $manager->flush();
+        $this->addFlash('Success','Add book successfully !');
+        return $this->redirectToRoute('app_order_detail', array('id' => $order_detail->getId()));
+    }
+
+    #[Route('/order/myorders', name: 'app_order_list', methods: ['GET'])]
     public function orderList(): Response
     {
         $user = $this->getUser();
@@ -180,4 +264,5 @@ class OrderController extends AbstractController
             'order_items' => $this->OrderItemsRepository->findAll(),
         ]);
     }
+    
 }

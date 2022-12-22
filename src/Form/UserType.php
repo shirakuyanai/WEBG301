@@ -11,7 +11,7 @@ class UserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $roles = $this->getParent('security.role_hierarchy.roles');
+        $roles = $this->getParent();
 
         $builder
             ->add('username')
@@ -22,12 +22,12 @@ class UserType extends AbstractType
                 'choices' => 
                 array
                 (
-                    'ROLE_ADMIN' => array
+                    'Admin' => array
                     (
                         'Yes' => "ROLE_ADMIN",
                     ),
 
-                    'ROLE_USER' => array
+                    'User' => array
                     (
                         'Yes' => "ROLE_USER"
                     ),

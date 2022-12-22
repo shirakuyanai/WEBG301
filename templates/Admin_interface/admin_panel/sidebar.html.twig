@@ -14,8 +14,7 @@
 				<img src="{{ asset('/images/default_profile_picture.png') }}" class="img-circle elevation-2" alt="User Image">
 			</div>
 			<div class="info">
-				<a href="#" class="d-block">{{app.user.firstname}}
-					{{app.user.lastname}}</a>
+				<a href="#" class="d-block">{{app.user.firstname}} {{app.user.lastname}}</a>
 			</div>
 		</div>
 
@@ -36,32 +35,33 @@
 			<ul
 				class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 				<!-- Add icons to the links using the .nav-icon class
-																																				               with font-awesome or any other icon font library -->
+																																               with font-awesome or any other icon font library -->
 
 				<li class="nav-header">Mangement</li>
 				<li class="nav-item">
 					<a href="{{ path('app_admin_product') }}" class="nav-link">
 						<p>
 							Products
+							<span class="badge badge-info right">2</span>
 						</p>
 					</a>
 				</li>
 				<li class="nav-item">
-					<a href="{{ path('app_category_index')}}" class="nav-link">
+					<a href="{{ path('app_category_index') }}" class="nav-link">
 						<p>
 							Categories
 						</p>
 					</a>
 				</li>
 				<li class="nav-item">
-					<a href="{{ path('app_member_panel') }}" class="nav-link">
+					<a href="pages/kanban.html" class="nav-link">
 						<p>
 							Members
 						</p>
 					</a>
 				</li>
 				<li class="nav-item">
-					<a href="pages/kanban.html" class="nav-link">
+					<a href="{{ path('app_order_panel') }}" class="nav-link">
 						<p>
 							Order
 						</p>

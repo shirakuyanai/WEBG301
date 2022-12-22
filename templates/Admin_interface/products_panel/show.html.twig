@@ -1,0 +1,36 @@
+{% extends '/Admin_interface/base.html.twig' %}
+
+{% block header1 %}Product #{{product}}
+{% endblock %}
+{% block header2 %}Products
+{% endblock %}
+{% block title %}Product #{{product}}
+{% endblock %}
+{% block body %}
+	<table class="table table-striped projects">
+		<tr>
+			<th>ID</th>
+			<td>{{product}}</td>
+		</tr>
+		<tr>
+			<th>Name</th>
+			<td>{{product.name}}</td>
+		</tr>
+		<tr>
+			<th>Image</th>
+			<td><img src="{{ asset('/images/Product/'~product.image) }}" height="400px"></td>
+		</tr>
+		<tr>
+			<th>Price</th>
+			<td>{{product.price|format_currency('VND')}}</td>
+		</tr>
+		<tr>
+			<th>Category</th>
+			<td>{{product.category}}</td>
+		</tr>
+		<tr>
+			<th>Price</th>
+			<td>{{product.stock}}</td>
+		</tr>
+	</table>
+{% endblock %}

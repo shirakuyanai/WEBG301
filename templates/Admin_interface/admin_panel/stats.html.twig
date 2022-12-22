@@ -31,13 +31,12 @@
 					<div class="col-md-2"></div>
 					<div class="col-md-8">
 						<p class="text-center">
-							<strong>Sales: 1 Jan, 2014 - 30 Jul, 2014</strong>
+							<strong>Sales: 1 Jan, 2020 - 20 Feb, 2022</strong>
 						</p>
 
 						<div
 							class="chart">
-							<!-- Sales Chart Canvas -->
-							<canvas id="salesChart"></canvas>
+							<canvas id="salesChart" height="180" style="height: 180px;"></canvas>
 						</div>
 						<!-- /.chart-responsive -->
 					</div>
@@ -91,3 +90,33 @@
 	</div>
 	<!-- /.col -->
 </div>
+
+<script>
+var salesChartData = {
+    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+    datasets: [
+      {
+        label: 'Digital Goods',
+        backgroundColor: 'rgba(60,141,188,0.9)',
+        borderColor: 'rgba(60,141,188,0.8)',
+        pointRadius: false,
+        pointColor: '#3b8bba',
+        pointStrokeColor: 'rgba(60,141,188,1)',
+        pointHighlightFill: '#fff',
+        pointHighlightStroke: 'rgba(60,141,188,1)',
+        data: [1, 2, 3, 4, 5, 6, 7]
+      },
+      {
+        label: 'Electronics',
+        backgroundColor: 'rgba(210, 214, 222, 1)',
+        borderColor: 'rgba(210, 214, 222, 1)',
+        pointRadius: false,
+        pointColor: 'rgba(210, 214, 222, 1)',
+        pointStrokeColor: '#c1c7d1',
+        pointHighlightFill: '#fff',
+        pointHighlightStroke: 'rgba(220,220,220,1)',
+        data: [1, 2, 3, 4, 5, 6, 7]
+      }
+    ]
+  }
+  </script>

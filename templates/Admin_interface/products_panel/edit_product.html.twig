@@ -1,15 +1,19 @@
 {% extends '/Admin_interface/base.html.twig' %}
-{% block header1 %}Products{% endblock %}
-{% block header2 %}Edit Product{% endblock %}
+{% block header1 %}Products
+{% endblock %}
+{% block header2 %}Edit Product
+{% endblock %}
+{% block title %}Edit product #{{product}}
+{% endblock %}
 {% block body %}
 
-	<a href="{{ path('app_products_panel') }}" >Go back</a>
+	<a href="{{ path('app_products_panel') }}">Go back</a>
 	<div class="container">
-		<h1>Edit Product {{product}}</h1>
+		<h1>Edit Product
+			{{product}}</h1>
 
 		{{ include('/Admin_interface/products_panel/_form.html.twig', {'button_label': 'Update'}) }}
 
-		
 
 		{{ include('/Admin_interface/products_panel/_delete_form.html.twig') }}
 	</div>

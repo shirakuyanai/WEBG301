@@ -15,25 +15,18 @@ Dashboard
 		<!-- Info boxes -->
 		{% include "/Admin_interface/admin_panel/summary.html.twig" %}
 		<!-- /.row -->
-		{% include "/Admin_interface/admin_panel/stats.html.twig" %}
 		<!-- /.row -->
 
 		<!-- Main row -->
 			<div
 			class="row"> <!-- Left col -->
-			<div class="col-md-8">
+			<div class="col-md-12">
 				<!-- MAP & BOX PANE -->
-				<!-- /.card -->
-				{% include "/Admin_interface/admin_panel/latestmembers.html.twig" %}
-				<!-- /.row -->
 
 				<!-- TABLE: LATEST ORDERS -->
-			{% include "/Admin_interface/admin_panel/latestorders.html.twig" %}
+			{% include "/Admin_interface/admin_panel/pendingorders.html.twig" %}
 				<!-- /.card -->
 			</div>
-			<!-- /.col -->
-			{% include "/Admin_interface/admin_panel/recentproducts.html.twig" %}
-			<!-- /.col -->
 		</div>
 		<!-- /.row -->
 	</div>

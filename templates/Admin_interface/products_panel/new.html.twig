@@ -1,8 +1,9 @@
 {% extends '/Admin_interface/base.html.twig' %}
-
 {% block header1 %}New Product
 {% endblock %}
 {% block header2 %}Products
+{% endblock %}
+{% block title %}New Product
 {% endblock %}
 {% block body %}
 	<a href="{{ path('app_products_panel') }}" class="text-white">Go back</a>
@@ -11,6 +12,4 @@
 
 		{{ include('/Admin_interface/products_panel/_form.html.twig') }}
 	</div>
-
-
 {% endblock %}

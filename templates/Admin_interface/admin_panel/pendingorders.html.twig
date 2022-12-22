@@ -1,0 +1,55 @@
+<div class="card">
+	<div class="card-header border-transparent">
+		<h3 class="card-title">Pending Orders</h3>
+
+		<div class="card-tools">
+			<button type="button" class="btn btn-tool" data-card-widget="collapse">
+				<i class="fas fa-minus"></i>
+			</button>
+			<button type="button" class="btn btn-tool" data-card-widget="remove">
+				<i class="fas fa-times"></i>
+			</button>
+		</div>
+	</div>
+	<!-- /.card-header -->
+	<div class="card-body p-0">
+		<div class="table-responsive">
+			<table class="table m-0">
+				<thead>
+					<tr>
+						<th>Order ID</th>
+						<th>Item</th>
+						<th>Status</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for order in orders %}
+						{% if order.status == 0 %}
+							<tr>
+								<td>
+									<a href="{{ path('app_order_detail', {'id': order}) }}">{{order}}</a>
+								</td>
+								<td>
+								{% for order_item in order_items %}
+									{% if order_item.order == order %}
+										<div>{{order_item.product.name}}</div>
+									{% endif %}	
+								{% endfor %}
+								</td>
+								<td>
+									<span class="badge badge-warning">Pending</span>
+								</td>
+							</tr>
+						{% endif %}
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+		<!-- /.table-responsive -->
+	</div>
+	<!-- /.card-body -->
+	<div class="card-footer clearfix d-flex justify-content-center">
+		<a href="{{ path('app_order_panel') }}">View All Orders</a>
+	</div>
+	<!-- /.card-footer -->
+</div>
