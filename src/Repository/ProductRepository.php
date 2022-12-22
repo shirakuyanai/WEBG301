@@ -38,6 +38,59 @@ class ProductRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+    public function add(Product $entity, bool $flush = true): void
+    {
+        $this->_em->persist($entity);
+        if ($flush) {
+            $this->_em->flush();
+        }
+    }
+
+    /**
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
+   
+
+    public function sortProductByIdDesc()
+    {
+        return $this->createQueryBuilder('product')
+            ->orderBy('product.id', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function sortProductPriceAsc()
+    {
+        return $this->createQueryBuilder('product')
+            ->orderBy('product.price', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function sortProductPriceDesc()
+    {
+        return $this->createQueryBuilder('product')
+            ->orderBy('product.price', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+
+    public function searchProduct($keyword) 
+    {
+        return $this->createQueryBuilder('product')
+            ->andWhere('product.name LIKE :key')
+            ->setParameter('key', '%' . $keyword . '%')
+            ->orderBy('product.price', 'ASC')
+            ->setMaxResults(20)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
 //    /**
 //     * @return Product[] Returns an array of Product objects

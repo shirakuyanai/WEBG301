@@ -1,14 +1,38 @@
 <div class="row">
 	{% for product in products %}
 		<div class="col-md-3 col-sm-6 product-item text-center">
-			<a href="{{ path('app_product_show', {'id': product.id}) }}"><img width="180" height="180" src="{{ asset('/images/Product/'~product.image) }}"></a>
+			<a href="{{ path('app_product_show', {'id': product.id}) }}"><img width="180" height="180" src="/{{ product.image }}"></a>
 			<h3>
 				<a href="{{ path('app_product_show', {'id': product.id}) }}">{{ product.name }}</a>
 
 			</h3>
-			<p>Warranty: {{ product.Warranty}}</p>
-			<p>Brand: {{ product.brand }}</p>
-			<p class="price">Price: {{ product.price|format_currency("VND") }} </p>
+			<p>Warranty:
+				{{ product.Warranty}}</p>
+			<p>Purchasing gift:
+				{{ product.gift }}</p>
+			{% if product.stock>=1 %}
+				<p class="price">Price:
+					{{ product.price|format_currency("VND") }}
+				</p>
+				<h5 class="text text-danger">
+					In-stock:
+					{{ product.stock}}
+				</h5>
+			</div>
+			<div class="card card-footer mt-1">
+
+			{% else %}
+				<h5 class="text text-primary">
+					Price:
+					{{ product.price }}
+					$
+				</h5>
+				<h5 class="text text-danger">
+					Out of stock
+				</h5>
+			{% endif %}
+
+
 		</div>
 	{% endfor %}
-</div>
+</div></div>
