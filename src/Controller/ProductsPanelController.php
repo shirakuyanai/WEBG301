@@ -6,13 +6,16 @@ use App\Entity\Product;
 
 use App\Form\ProductType;
 use App\Repository\CartRepository;
-use App\Repository\UserRepository;
 use App\Repository\ProductRepository;
-use App\Repository\CategoryRepository;
+use App\Repository\UserRepository;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
+use function PHPUnit\Framework\throwException;
+
 // #[Route('/admin')]
 class ProductsPanelController extends AbstractController
 {
@@ -20,16 +23,15 @@ class ProductsPanelController extends AbstractController
     private $productRepository;
     
     private $cartRepository;
-    private $categoryRepository;
 
 
-    public function __construct(UserRepository $userRepository, ProductRepository $productRepository, CartRepository $cartRepository, CategoryRepository $categoryRepository)
+
+    public function __construct(UserRepository $userRepository, ProductRepository $productRepository, CartRepository $cartRepository)
     {
         $this->cartRepository = $cartRepository;
         $this->userRepository = $userRepository;
         $this->productRepository = $productRepository;
-        $this->categoryRepository = $categoryRepository;
-        $this->cartRepository = $cartRepository;
+        
     }
     #[Route('admin/product', name: 'app_products_panel')]
     public function index(): Response
@@ -38,40 +40,33 @@ class ProductsPanelController extends AbstractController
             'controller_name' => 'ProductsPanelController',
         ]);
     }
-        
-    #[Route('/product/{id}', name: 'app_product_show', methods: ['GET'])]
-    public function show(Product $product): Response
-    {
-        return $this->render('product/show.html.twig', [
-            'product' => $product,
-            'categories' =>$this->categoryRepository->findAll(),
-            'products' => $this->productRepository->findAll(),
-            'carts' =>$this->cartRepository->findAll(),
-        ]);
-    }
 
-    #[Route('/product/{id}/delete', name: 'app_product_delete', methods: ['GET','POST'])]
-    public function delete(Request $request, $id): Response
-    {
-        
-        $product = $this->productRepository->find($id);
-            $this->productRepository->remove($product, true);
-
-        return $this->redirectToRoute('app_admin_product', [], Response::HTTP_SEE_OTHER);
-    }
 
     
 
     #[Route('admin/product/new', name: 'app_product_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, ProductRepository $productRepository): Response
+    public function new(Request $request): Response
     {
         $product = new Product();
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $productRepository->save($product, true);
-
+        $img = $product->getImage();
+        $imgName = uniqid();
+        $imgExtension = $img->guessExtension();
+        $imageName = $imgName . "." . $imgExtension;
+        try {
+            $img->move(
+               $this->getParameter('product_image'),
+               $imageName
+            );
+        } catch (FileException $e) {
+            throwException($e);
+        }
+        $product->setImage($imageName);
+            
+            $this->productRepository->save($product, true);
             return $this->redirectToRoute('app_admin_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -80,26 +75,55 @@ class ProductsPanelController extends AbstractController
             'form' => $form,
         ]);
     }
-    
 
-    // #[Route('/product/{id}', name: 'app_product_show', methods: ['GET'])]
-    // public function show(Product $product): Response
-    // {
-    //     return $this->render('product/show.html.twig', [
-    //         'product' => $product,
-    //     ]);
-    // }
-
-    #[Route('/product/{id}/edit', name: 'app_product_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Product $product, ProductRepository $productRepository): Response
+    #[Route('/product/{id}', name: 'app_product_show', methods: ['GET'])]
+    public function show(Product $product): Response
     {
+        return $this->render('product/show.html.twig', [
+            'product' => $product,
+        ]);
+    }
+
+    #[Route('/admin/product/{id}', name: 'app_product_show_admin', methods: ['GET'])]
+    public function detail($id): Response
+    {
+        $product = $this->productRepository->find($id);
+        return $this->render('/Admin_interface/products_panel/show.html.twig', [
+            'product' => $product,
+        ]);
+    }
+
+    #[Route('/admin/product/{id}/edit', name: 'app_product_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request,$id, ProductRepository $productRepository): Response
+    {
+        $product = $this->productRepository->find($id);
+        $old_img = $product->getImage();
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            
+            $imageFile = $form['image']->getData();
+            if ($imageFile)
+            {
+                $img = $product->getImage();
+                $imgName = uniqid();
+                $imgExtension = $img->guessExtension();
+                $imageName = $imgName . "." . $imgExtension;
+                try {
+                    $img->move(
+                    $this->getParameter('product_image'),
+                    $imageName
+                    );
+                } catch (FileException $e) {
+                    throwException($e);
+                }
+                $product->setImage($imageName);
+            }
+            
+                
             $productRepository->save($product, true);
-
-            return $this->redirectToRoute('app_admin_product', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_product_edit', array('id' => $product), Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('/Admin_interface/products_panel/edit_product.html.twig', [
@@ -108,4 +132,14 @@ class ProductsPanelController extends AbstractController
         ]);
     }
 
+
+    #[Route('/admin/product/{id}/delete', name: 'app_product_delete', methods: ['GET','POST'])]
+    public function delete(Request $request, $id): Response
+    {
+        
+        $product = $this->productRepository->find($id);
+            $this->productRepository->remove($product, true);
+
+        return $this->redirectToRoute('app_admin_product', [], Response::HTTP_SEE_OTHER);
+    }
 }

@@ -7,10 +7,11 @@ use App\Form\ProductType;
 use App\Repository\CartRepository;
 use App\Repository\UserRepository;
 use App\Repository\ProductRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\CategoryRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/admin')]
 class AdminPanelController extends AbstractController
@@ -19,14 +20,16 @@ class AdminPanelController extends AbstractController
     private $productRepository;
     
     private $cartRepository;
+    private $categoryRepository;
 
 
 
-    public function __construct(UserRepository $userRepository, ProductRepository $productRepository, CartRepository $cartRepository)
+    public function __construct(UserRepository $userRepository, ProductRepository $productRepository, CartRepository $cartRepository, CategoryRepository $categoryRepository)
     {
         $this->cartRepository = $cartRepository;
         $this->userRepository = $userRepository;
         $this->productRepository = $productRepository;
+        $this->categoryRepository = $categoryRepository;
         
     }
     #[Route('/', name: 'app_admin_index')]
@@ -42,6 +45,9 @@ class AdminPanelController extends AbstractController
 
         return $this->render('Admin_interface/admin_panel/index.html.twig', [
             'controller_name' => 'AdminPanelController',
+            'products' => $this->productRepository->findAll(),
+            'categories' => $this->categoryRepository->findAll(),
+            'users' => $this->userRepository->findAll(),
         ]);
     }
 

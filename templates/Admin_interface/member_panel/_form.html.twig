@@ -1,0 +1,16 @@
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
+{{ form_start(form) }}
+    <div class="mb-3">
+    {{ form_label(form.username) }}
+    {{ form_widget(form.username) }}
+    </div>
+    <div class="mb-3">
+    {{ form_label(form.email) }}
+    {{ form_widget(form.email) }}
+    </div>
+    <div class="mb-3">
+    {{ form_label(form.roles) }}
+    {{ form_widget(form.roles) }}
+    </div>
+<button class="btn bg-primary">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}

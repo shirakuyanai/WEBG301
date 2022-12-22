@@ -1,0 +1,14 @@
+{% extends '/Admin_interface/base.html.twig' %}
+{% block header1 %}Member{% endblock %}
+{% block header2 %}Edit Member{% endblock %}
+{% block body %}
+
+	<a href="{{ path('app_member_panel') }}" >Go back</a>
+	<div class="container">
+		<h1>Edit Member {{user}}</h1>
+
+		{{ include('/Admin_interface/member_panel/_form.html.twig', {'button_label': 'Update'}) }}
+
+		{{ include('/Admin_interface/member_panel/_delete_form.html.twig') }}
+	</div>
+{% endblock %}

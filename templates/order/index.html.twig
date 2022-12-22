@@ -14,25 +14,8 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 {% endblock %}
 
-{% block nav %}
-	{% include "/UserInterface/NavBar.html.twig" %}
-{% endblock %}
 
 {% block body %}
-	{# {% set address_1 = null %}
-	{% set address_2 = null %}
-	{% set address_3 = null %}
-	{% set address_4 = null %}
-	{% set zipcode = null %}
-	{% for addr in addrs %}
-	    {% if addr == app.user.defaultaddress %}
-	        {% set address_1 = addr.address1 %}
-	        {% set address_2 = addr.address2 %}
-	        {% set address_3 = addr.address3 %}
-	        {% set address_4 = addr.address4 %}
-	        {% set zipcode = addr.zipcode %}
-	    {% endif %}
-	{% endfor %} #}
 	<div class="container mt-5 px-5">
 		<div class="mb-4">
 			<h2>Checkout</h2>
@@ -136,7 +119,7 @@
 							{% endfor %}
 							<div class="d-flex justify-content-between mb-4">
 								<div class="align-middle">
-									<img src="/{{product_image}}" width="80%" height="80%">
+									<img src="{{ asset('/images/Product/'~product_image) }}" width="80%" height="80%">
 								</div>
 								<div>
 									<h6 class="pt-4" style="font-weight:lighter;">{{product_name}}</h6>
@@ -169,93 +152,3 @@
 	</div>
 
 {% endblock %}
-
-
-{# {% block body %}
-		<div class="wrap"> <div class="main">
-			<div class="main_header">
-				<img src="{{ asset('/images/logo(banner).png') }}" class="mb-5" width="350px" height="55.600814664px">
-			</div>
-			<div class="main_content">
-				<h5 class="pb-3">Contact information</h5>
-				<h6 class="text-muted">{{app.user.userIdentifier}}
-					({{app.user.getEmail}})</h6>
-				<h6 class="mb-5">Not you? Logout
-					<a href="{{ path('app_logout') }}" style="text-decoration:none; color:#207ca7 ">here</a>.</h6>
-
-				<h5 class="mb-3">Billing address.</h5>
-				<form method="post" action="{{ path('app_submit_order') }}">
-					<div>
-						<Label>Address 1</Label>
-						<input type="text" name="address_1">
-					</div>
-					<br>
-					<div>
-						<Label>Address 2</Label>
-						<input type="text" name="address_2">
-					</div>
-					<br>
-					<div>
-						<Label>Address 3</Label>
-						<input type="text" name="address_3">
-					</div>
-					<br>
-					<div>
-						<Label>Address 4</Label>
-						<input type="text" name="address_4">
-					</div>
-					<br>
-					<div>
-						Do you want to save the address as your default address?
-						<input type="checkbox" name="save_check">
-					</div>
-					<br>
-					<div>
-						<input type="submit" value="Save">
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
-	<div class="sidebar">
-		<div class="sidebar_content container" style="padding-right:40%">
-			{% set total = null %}
-			{% for cart in carts %}
-				{% set product_image = null %}
-				{% set product_price = null %}
-				{% set product_name = null %}
-				{% for product in products %}
-					{% if product == cart.product %}
-						{% set product_image = product.image %}
-						{% set product_price = product.price %}
-						{% set product_name = product.name %}
-					{% endif %}
-				{% endfor %}
-				<div class="d-flex justify-content-between">
-					<div>
-						<img src="/{{product_image}}" class="m-2" style="width:100px;height:100px">
-						{{product_name}}
-						({{cart.quantity}})
-					</div>
-					<div class="pt-5">
-						${{ product_price * cart.quantity }}
-					</div>
-				</div>
-				{% set total = total + product_price * cart.quantity %}
-			{% endfor %}
-			<br>
-			<div>
-				<a href="{{ path('app_cart_index') }}" style="text-decoration:none">Edit cart</a>
-			</div>
-			<hr>
-			<div class="d-flex justify-content-between">
-				<div>
-					Subtotal:
-				</div>
-				<div>
-					{{total}}
-				</div>
-			</div>
-		</div>
-	</div>
-</div></div>{% endblock %} #}
