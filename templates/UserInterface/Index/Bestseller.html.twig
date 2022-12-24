@@ -12,28 +12,9 @@
 					{{ product.Warranty}}</p>
 				<p>Brand:
 					{{ product.brand }}</p>
-				{% if product.stock>=1 %}
 				<p class="price">Price:
 					{{ product.price|format_currency("VND") }}
 				</p>
-				<h5 class="text text-danger">
-					In-stock:
-					{{ product.stock}}
-				</h5>
-			</div>
-			<div class="card card-footer mt-1">
-
-			{% else %}
-				<h5 class="text text-primary">
-					Price:
-					{{ product.price }}
-					$
-				</h5>
-				<h5 class="text text-danger">
-					Out of stock
-				</h5>
-			{% endif %}
-				</p>	
 			</div>
 		{% endif %}
 	{% endfor %}

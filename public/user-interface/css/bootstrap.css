@@ -1059,6 +1059,19 @@ th {
 .glyphicon-menu-right:before {
   content: "\e258";
 }
+
+.justify-content-between {
+  justify-content: space-between !important;
+}
+
+.d-flex {
+  display: flex !important;
+}
+
+.border {
+  border: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color) !important;
+}
+
 .glyphicon-menu-down:before {
   content: "\e259";
 }
