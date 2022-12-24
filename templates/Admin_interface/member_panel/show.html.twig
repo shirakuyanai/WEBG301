@@ -1,0 +1,64 @@
+{% extends '/Admin_interface/base.html.twig' %}
+
+{% block header1 %}Member #{{user}}
+{% endblock %}
+{% block header2 %}Members
+{% endblock %}
+{% block title %}Member #{{user}}
+{% endblock %}
+{% block body %}
+	<table class="table table-striped projects">
+		<tr>
+			<th>ID</th>
+			<td>{{user}}</td>
+		</tr>
+		<tr>
+			<th>Username</th>
+			<td>{{user.username}}</td>
+		</tr>
+        <tr>
+			<th>First Name</th>
+			<td>{{user.firstname}}</td>
+		</tr>
+        <tr>
+			<th>Last Name</th>
+			<td>{{user.lastname}}</td>
+		</tr>
+		<tr>
+			<th>Email</th>
+			<td>{{user.email}}</td>
+		</tr>
+		<tr>
+			<th>Phone Number</th>
+			<td>{{user.phone}}</td>
+		</tr>
+        <tr>
+			<th>Roles</th>
+            <td>
+                {% for role in user.roles %}
+                    <div>{{role}}</div>
+                {% endfor %}
+            </td>
+		</tr>
+		<tr>
+			<th>Street Address</th>
+			<td>{{user.address1}}</td>
+		</tr>
+		<tr>
+			<th>Sate/Provine</th>
+			<td>{{user.address2}}</td>
+		</tr>
+        <tr>
+			<th>City</th>
+			<td>{{user.address3}}</td>
+		</tr>
+        <tr>
+			<th>Country</th>
+			<td>{{user.address4}}</td>
+		</tr>
+        <tr>
+			<th>Zipcode</th>
+			<td>{{user.zipcode}}</td>
+		</tr>
+	</table>
+{% endblock %}

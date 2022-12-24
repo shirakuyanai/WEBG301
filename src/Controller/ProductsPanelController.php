@@ -144,11 +144,13 @@ class ProductsPanelController extends AbstractController
 
 
     #[Route('/admin/product/{id}/delete', name: 'app_product_delete', methods: ['GET','POST'])]
-    public function delete(Request $request, $id): Response
+    public function delete(Request $request, Product $product): Response
     {
-        
-        $product = $this->productRepository->find($id);
+        if ($this->isCsrfTokenValid('delete'.$product->getId(), $request->request->get('_token')))
+        {
             $this->productRepository->remove($product, true);
+        }
+            
 
         return $this->redirectToRoute('app_admin_product', [], Response::HTTP_SEE_OTHER);
     }

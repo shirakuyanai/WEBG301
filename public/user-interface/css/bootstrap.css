@@ -1059,19 +1059,6 @@ th {
 .glyphicon-menu-right:before {
   content: "\e258";
 }
-
-.justify-content-between {
-  justify-content: space-between !important;
-}
-
-.d-flex {
-  display: flex !important;
-}
-
-.border {
-  border: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color) !important;
-}
-
 .glyphicon-menu-down:before {
   content: "\e259";
 }
@@ -2560,7 +2547,7 @@ output {
   color: #555;
 }
 .form-control {
-  display: block;
+  display: inline;
   width: 100%;
   height: 34px;
   padding: 6px 12px;
@@ -4212,7 +4199,8 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
             box-shadow: none;
   }
   .navbar-collapse.collapse {
-    display: block !important;
+    display: flex;
+    justify-content: center;
     height: auto !important;
     padding-bottom: 0;
     overflow: visible !important;
@@ -4241,6 +4229,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .container-fluid > .navbar-header,
 .container > .navbar-collapse,
 .container-fluid > .navbar-collapse {
+  justify-content: space-between;
   margin-right: -15px;
   margin-left: -15px;
 }
@@ -4498,8 +4487,10 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
     float: left !important;
   }
   .navbar-right {
-    float: right !important;
-    margin-right: -15px;
+    display:flex;
+    align-items: center;
+    justify-content: right;
+
   }
   .navbar-right ~ .navbar-right {
     margin-right: 0;
@@ -4696,9 +4687,6 @@ fieldset[disabled] .navbar-default .btn-link:focus {
 .navbar-inverse .btn-link:hover,
 .navbar-inverse .btn-link:focus {
   color: #fff;
-}
-.left-search{
-  margin-left: 450px;
 }
 .navbar-inverse .btn-link[disabled]:hover,
 fieldset[disabled] .navbar-inverse .btn-link:hover,

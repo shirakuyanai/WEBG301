@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Form\UserType;
 use App\Entity\User;
+use App\Repository\CartRepository;
+use App\Repository\OrderDetailsRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,19 +15,27 @@ use Symfony\Component\Routing\Annotation\Route;
 class MemberPanelController extends AbstractController
 {
     private $userRepository;
+    private $cartRepository;
+    private $orderDetailsRepository;
 
-    public function __construct(UserRepository $userRepository){
+    public function __construct(UserRepository $userRepository, CartRepository $cartRepository, OrderDetailsRepository $orderDetailsRepository){
         $this->userRepository = $userRepository;
+        $this->cartRepository = $cartRepository;
+        $this->orderDetailsRepository = $orderDetailsRepository;
     }
 
     #[Route('/admin/member', name: 'app_member_panel')]
     public function index(): Response
     {
-        $roles = $this->getParameter('security.role_hierarchy.roles');
-
         return $this->render('Admin_interface/member_panel/index.html.twig', [
-            'controller_name' => 'MemberPanelController',
             'users' => $this->userRepository->findAll(),
+        ]);
+    }
+    #[Route('/admin/member/{id}/show', name: 'app_member_show')]
+    public function show(User $user): Response
+    {
+        return $this->render('Admin_interface/member_panel/show.html.twig', [
+            'user' => $user,
         ]);
     }
     // #[Route('admin/member/new', name: 'app_member_new', methods: ['GET', 'POST'])]
@@ -48,13 +58,13 @@ class MemberPanelController extends AbstractController
     // }
     
     #[Route('admin/member/{id}/edit', name: 'app_member_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, User $user,UserRepository $userRepository): Response
+    public function edit(Request $request, User $user): Response
     {
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $userRepository->save($user, true);
+            $this->userRepository->save($user, true);
 
             return $this->redirectToRoute('app_member_panel', [], Response::HTTP_SEE_OTHER);
         }

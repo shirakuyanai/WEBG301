@@ -1,22 +1,25 @@
-<nav class="navbar navbar-default text-center">
-	<div class="container-fluid">
-		{% include "/UserInterface/Banner.html.twig" %}
+<nav class="navbar navbar-default">
+	<div
+		class="container-fluid">
 		<!-- Brand and toggle get grouped for better mobile display -->
 		<div class="navbar-header">
-			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-				<span class="sr-only">Toggle navigation</span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-			</button>
+
+			<a class="" href="#"><img src="{{ asset('images/LOGO.png') }}" alt="" width="100px" height="90px"></a>
 		</div>
+
 		<!-- Collect the nav links, forms, and other content for toggling -->
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-			<a href="{{path('app_index')}}"><img src="{{ asset('images/favicon.png') }}" width="50px"></a>
-			<form class="navbar-form" action="{{ path('search_product') }}" method="post" style="width:100w;">
-				<input class="form-control" style="max-width:100w" type="search" name="keyword" required maxlength="10">
-				<button type="submit" class="btn btn-default">Search</button>
-			</form>
+
+			<div class=" ">
+				<div class="form-group">
+					<form class="navbar-form navbar-left left-search" action="{{ path('search_product') }}"  method="post">
+						<input class="form-control" style=" width: 500px;" type="search" name="keyword" placeholder="Enter product title" required maxlength="10">
+						{# <button type="submit" class="btn btn-default">Submit</button> #}
+					</form>
+				</div>
+
+			</div
+
 			<ul class="nav navbar-nav navbar-right">
 				{% if app.user %}
 					<li>
@@ -44,6 +47,7 @@
 								<a href="#">Settings</a>
 							</li>
 							<li role="separator" class="divider"></li>
+							<li></li>
 							<li class="text-danger">
 								<a href="{{ path('app_logout') }}">Logout</a>
 							</li>
@@ -55,10 +59,11 @@
 						<a href="{{ path('app_login') }}" style="text-decoration:none;">Login</a>
 						|
 						<a href="{{ path('app_register') }}" style="text-decoration:none;">Register</a>
+						<ul>
+						{% endif %}
 					</ul>
-				{% endif %}
-		</div>
+				</div>
 				<!-- /.navbar-collapse -->
-	</div>
+			</div>
 			<!-- /.container-fluid -->
-</nav>
+		</nav>

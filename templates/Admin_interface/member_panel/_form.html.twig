@@ -1,16 +1,50 @@
 {% form_theme form 'bootstrap_5_layout.html.twig' %}
 {{ form_start(form) }}
-    <div class="mb-3">
-    {{ form_label(form.username) }}
-    {{ form_widget(form.username) }}
+    <div class="row">
+        <div class="col-md-6">
+            <div class="mb-3">
+                {{ form_label(form.username) }}
+                {{ form_widget(form.username) }}
+            </div>
+            <div class="mb-3">
+                {{ form_label(form.email) }}
+                {{ form_widget(form.email) }}
+            </div>
+            <div class="mb-3">
+                {{ form_label(form.phone) }}
+                {{ form_widget(form.phone) }}
+            </div>
+            <div class="mb-3">
+                {{ form_label(form.roles) }}
+                {{ form_widget(form.roles) }}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="mb-3">
+                {{ form_label(form.firstname) }}
+                {{ form_widget(form.firstname) }}
+            </div>
+            <div class="mb-3">
+                {{ form_label(form.lastname) }}
+                {{ form_widget(form.lastname) }}
+            </div>
+            <div class="mb-3">
+                {{ form_label(form.address_1) }}
+                {{ form_widget(form.address_1) }}
+            </div>
+            <div class="mb-3">
+                {{ form_label(form.address_2) }}
+                {{ form_widget(form.address_2) }}
+            </div>
+            <div class="mb-3">
+                {{ form_label(form.address_3) }}
+                {{ form_widget(form.address_3) }}
+            </div>
+            <div class="mb-3">
+                {{ form_label(form.address_4) }}
+                {{ form_widget(form.address_4) }}
+            </div>
+        </div>
     </div>
-    <div class="mb-3">
-    {{ form_label(form.email) }}
-    {{ form_widget(form.email) }}
-    </div>
-    <div class="mb-3">
-    {{ form_label(form.roles) }}
-    {{ form_widget(form.roles) }}
-    </div>
-<button class="btn bg-primary">{{ button_label|default('Save') }}</button>
+    <button class="btn bg-primary"><i class="fa fa-save"></i> {{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
